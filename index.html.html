@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fischer- und Naturschutzverein Aulendorf e.V.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Merriweather -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        forest: {
+                            50: '#f0f7f4',
+                            100: '#dceee6',
+                            200: '#badcd0',
+                            300: '#8cc3b1',
+                            400: '#5aa48e',
+                            500: '#1b6b52',
+                            600: '#145943',
+                            700: '#0f4c3a',
+                            800: '#0c3b2e',
+                            900: '#092f25',
+                        },
+                        lake: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#0c4a6e',
+                            800: '#083344',
+                            900: '#05202b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+        }
+        @media print {
+            header, nav, aside, footer, .no-print {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+            }
+            main {
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-forest-50 via-[#eef6f6] to-lake-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Top Secondary Bar mit Direkt-Route zum Fischerheim & Digitalem Mitgliedsantrag -->
+    <div class="bg-gradient-to-r from-forest-900 via-forest-800 to-lake-800 text-slate-100 text-xs sm:text-sm py-2.5 px-4 border-b border-white/10">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Haslach+3,+88326+Aulendorf&travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-emerald-200 px-3 py-1 rounded-full transition font-medium">
+                    <i data-lucide="navigation" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>Route zum Fischerheim (Haslach 3)</span>
+                </a>
+                <a href="mailto:info@fnv-aulendorf.de" class="hidden md:inline-flex items-center gap-1 text-slate-300 hover:text-white transition">
+                    <i data-lucide="mail" class="w-3.5 h-3.5 text-lake-300"></i>
+                    <span>info@fnv-aulendorf.de</span>
+                </a>
+            </div>
+            <div class="flex flex-wrap items-center gap-4 ml-auto text-xs sm:text-sm">
+                <button onclick="switchTab('ueber-uns')" class="hover:text-emerald-300 transition-colors">Über uns</button>
+                <button onclick="switchTab('impressum')" class="hover:text-emerald-300 transition-colors">Impressum</button>
+                <button onclick="switchTab('datenschutz')" class="hover:text-emerald-300 transition-colors">Datenschutz</button>
+                <button onclick="switchTab('mitglied-werden')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-3.5 py-1 rounded-full shadow-sm transition flex items-center gap-1.5">
+                    <i data-lucide="file-signature" class="w-3.5 h-3.5"></i>
+                    <span>Mitglied werden</span>
+                </button>
+                <!-- NEU: Mitglieder-Login & Admin-Zugangsverwaltung Statusleiste -->
+                <div id="header-auth-area" class="flex items-center gap-2">
+                    <button onclick="openLoginModal()" class="bg-lake-500 hover:bg-lake-400 text-white font-bold px-3.5 py-1 rounded-full shadow-sm transition flex items-center gap-1.5 border border-white/20">
+                        <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                        <span>Mitglieder-Login</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header mit Vereinswappen-Stil, Fischerheim-Panorama & Schnellaktionen -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm border-b border-forest-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-8 pt-6 pb-5">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-5">
+                <div onclick="switchTab('startseite')" class="cursor-pointer flex items-center gap-4 text-center md:text-left">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-forest-600 to-lake-600 text-white flex items-center justify-center shadow-md shrink-0">
+                        <i data-lucide="fish" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-forest-600 block">Natur • Hege • Fischerei in Oberschwaben</span>
+                        <h1 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
+                            Fischer- und Naturschutzverein Aulendorf e.V.
+                        </h1>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-2.5">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=47.9261,9.6358&travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-lake-50 hover:bg-lake-100 text-lake-700 border border-lake-200 text-xs sm:text-sm font-semibold transition shadow-sm">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-lake-600"></i>
+                        <span>Anfahrt Fischerheim</span>
+                    </a>
+                    <button onclick="switchTab('gewaesser')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs sm:text-sm font-semibold transition shadow-sm">
+                        <i data-lucide="waves" class="w-4 h-4"></i>
+                        <span>5 Vereinsgewässer entdecken</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Panorama-Banner vom Fischerheim am Haslacher Weiher -->
+            <div class="relative rounded-2xl overflow-hidden border-2 border-forest-200/80 shadow-lg bg-slate-200 group">
+                <img id="fischerheim-banner-img" 
+                     src="fischerheim.jpg" 
+                     alt="Fischerheim Haslach am Weiher – Fischer- und Naturschutzverein Aulendorf e.V." 
+                     class="w-full h-48 sm:h-60 md:h-72 object-cover object-center hidden"
+                     onload="this.classList.remove('hidden'); document.getElementById('fischerheim-svg-fallback').classList.add('hidden');"
+                     onerror="this.classList.add('hidden'); document.getElementById('fischerheim-svg-fallback').classList.remove('hidden');">
+
+                <!-- Detailgetreue Panorama-Illustration des Fischerheims Haslach -->
+                <div id="fischerheim-svg-fallback" class="w-full h-48 sm:h-60 md:h-72 relative overflow-hidden">
+                    <svg viewBox="0 0 1000 240" preserveAspectRatio="xMidYMid slice" class="w-full h-full block">
+                        <defs>
+                            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#cfe4f2"/>
+                                <stop offset="60%" stop-color="#dfece6"/>
+                                <stop offset="100%" stop-color="#c2d6ce"/>
+                            </linearGradient>
+                            <linearGradient id="roofSolar" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#1e293b"/>
+                                <stop offset="100%" stop-color="#0f172a"/>
+                            </linearGradient>
+                            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#155e75"/>
+                                <stop offset="50%" stop-color="#0f4c3a"/>
+                                <stop offset="100%" stop-color="#082f27"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="1000" height="175" fill="url(#skyGrad)"/>
+                        <!-- Sanfte Waldsilhouette im Hintergrund -->
+                        <path d="M0,130 L120,105 L240,118 L360,92 L500,85 L680,95 L820,80 L940,95 L1000,90 L1000,175 L0,175 Z" fill="#2e5948" opacity="0.55"/>
+                        
+                        <!-- Linkes Nachbargebäude -->
+                        <polygon points="35,112 95,68 155,112" fill="#8b4d3b"/>
+                        <rect x="45" y="112" width="100" height="50" fill="#e6e4df"/>
+                        <rect x="175" y="115" width="95" height="45" fill="#eceae4"/>
+                        <polygon points="168,115 215,78 280,115" fill="#995845"/>
+
+                        <!-- Hauptgebäude: Fischerheim Haslach (langes weißes Haus mit dunklem Photovoltaik-Dach) -->
+                        <rect x="285" y="100" width="380" height="65" fill="#f5f3ef" stroke="#cbd5e1" stroke-width="1"/>
+                        <polygon points="278,100 310,34 638,34 668,100" fill="#7c4d3f"/>
+                        <!-- Solaranlage -->
+                        <polygon points="292,97 316,39 625,39 648,97" fill="url(#roofSolar)" stroke="#475569" stroke-width="1"/>
+                        <line x1="300" y1="78" x2="640" y2="78" stroke="#94a3b8" stroke-width="1.2"/>
+                        <line x1="308" y1="58" x2="632" y2="58" stroke="#94a3b8" stroke-width="1.2"/>
+                        <!-- Fensterreihe -->
+                        <g fill="#1e3a5f" stroke="#ffffff" stroke-width="1.4">
+                            <rect x="335" y="118" width="15" height="17"/>
+                            <rect x="372" y="118" width="15" height="17"/>
+                            <rect x="410" y="118" width="15" height="17"/>
+                            <rect x="448" y="118" width="15" height="17"/>
+                            <rect x="485" y="118" width="15" height="17"/>
+                            <rect x="528" y="118" width="15" height="17"/>
+                            <rect x="562" y="118" width="15" height="17"/>
+                            <rect x="598" y="118" width="15" height="17"/>
+                            <rect x="632" y="118" width="13" height="17"/>
+                        </g>
+                        <rect x="558" y="140" width="44" height="11" fill="#e0f2fe" stroke="#0284c7" stroke-width="0.8"/>
+
+                        <!-- Häuser rechts -->
+                        <polygon points="815,118 855,90 895,118" fill="#78594e"/>
+                        <rect x="822" y="118" width="65" height="38" fill="#8b796d"/>
+                        <polygon points="902,112 938,84 985,112" fill="#57534e"/>
+                        <rect x="908" y="112" width="70" height="45" fill="#e7e5e4"/>
+
+                        <!-- Leitplanke rechts -->
+                        <rect x="505" y="158" width="465" height="4" fill="#cbd5e1"/>
+
+                        <!-- Schilfgürtel vor dem Fischerheim -->
+                        <path d="M10,182 Q120,104 260,118 Q390,112 510,174 L515,186 L0,186 Z" fill="#9c7e54" opacity="0.92"/>
+                        <path d="M30,184 Q180,100 340,110 Q440,120 505,182 Z" fill="#b59669" opacity="0.78"/>
+
+                        <!-- Bäume am Ufer -->
+                        <g stroke="#2d3b36" stroke-width="3" fill="none">
+                            <path d="M72,182 L72,15 M72,70 L35,20 M72,85 L110,30"/>
+                            <path d="M135,182 L140,25 M138,80 L105,35 M138,65 L175,20"/>
+                            <path d="M518,178 L518,10 M518,65 L485,18 M518,75 L555,25"/>
+                            <path d="M585,180 L582,12 M583,68 L545,22 M583,55 L625,18"/>
+                            <path d="M685,182 L680,18 M682,75 L645,28 M682,65 L722,24"/>
+                        </g>
+
+                        <!-- Haslacher Weiher im Vordergrund -->
+                        <rect x="0" y="178" width="1000" height="62" fill="url(#waterGrad)"/>
+                        <!-- Wasser-Lichtreflexe -->
+                        <line x1="120" y1="195" x2="290" y2="195" stroke="#7dd3fc" stroke-width="1" opacity="0.35"/>
+                        <line x1="420" y1="208" x2="680" y2="208" stroke="#6ee7b7" stroke-width="1.2" opacity="0.3"/>
+                        <line x1="740" y1="192" x2="910" y2="192" stroke="#7dd3fc" stroke-width="1" opacity="0.35"/>
+                        <!-- Holzsteg vorne links -->
+                        <rect x="235" y="188" width="90" height="7" fill="#3e2f26"/>
+                        <line x1="245" y1="188" x2="245" y2="204" stroke="#261c16" stroke-width="3.5"/>
+                        <line x1="278" y1="188" x2="278" y2="204" stroke="#261c16" stroke-width="3.5"/>
+                        <line x1="312" y1="188" x2="312" y2="204" stroke="#261c16" stroke-width="3.5"/>
+                    </svg>
+                </div>
+
+                <!-- Overlay-Leiste unten auf dem Banner -->
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/85 via-slate-900/50 to-transparent p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2">
+                    <div class="text-white text-xs sm:text-sm flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="font-medium">Vereinsheim & Haslacher Weiher • Haslach 3, 88326 Aulendorf</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Haslach+3,+88326+Aulendorf&travelmode=driving" target="_blank" rel="noopener noreferrer" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow transition">
+                            <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                            <span>Route starten</span>
+                        </a>
+                        <label class="bg-slate-900/80 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg cursor-pointer backdrop-blur-sm flex items-center gap-1.5 border border-white/20 shadow transition">
+                            <i data-lucide="image-plus" class="w-3.5 h-3.5 text-lake-300"></i>
+                            <span>Originalfoto fischerheim.jpg laden</span>
+                            <input type="file" accept="image/*" class="hidden" onchange="loadCustomBanner(event)">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hauptnavigation in modernem Waldgrün & Seeblau -->
+        <nav class="bg-gradient-to-r from-forest-800 via-forest-700 to-lake-700 text-white sticky top-0 z-30 shadow-md">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="flex items-center justify-between lg:hidden py-3">
+                    <span class="text-sm font-semibold text-emerald-100 flex items-center gap-2">
+                        <i data-lucide="compass" class="w-4 h-4 text-emerald-300"></i> Vereins-Navigation
+                    </span>
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-semibold text-white flex items-center gap-1.5">
+                        <i data-lucide="menu" class="w-4 h-4"></i> Rubriken öffnen
+                    </button>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <ul class="hidden lg:flex flex-wrap items-center justify-center text-sm font-medium gap-1 py-1.5">
+                    <li><button onclick="switchTab('startseite')" data-nav="startseite" class="nav-btn px-3.5 py-2.5 rounded-xl bg-white text-forest-900 font-semibold shadow-sm transition">Startseite</button></li>
+                    <li><button onclick="switchTab('gewaesser')" data-nav="gewaesser" class="nav-btn px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-emerald-50 transition flex items-center gap-1.5"><i data-lucide="waves" class="w-4 h-4 text-lake-300"></i><span>Gewässer (5)</span></button></li>
+                    <li><button onclick="switchTab('tageskarten')" data-nav="tageskarten" class="nav-btn px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-emerald-50 transition flex items-center gap-1.5"><span>Tageskarten</span><span class="bg-emerald-400 text-slate-950 text-[11px] px-1.5 py-0.5 rounded-md font-bold">18 €</span></button></li>
+                    <li><button onclick="switchTab('jugendgruppe')" data-nav="jugendgruppe" class="nav-btn px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-emerald-50 transition flex items-center gap-1.5"><i data-lucide="tent" class="w-4 h-4 text-emerald-300"></i><span>Jugendgruppe & Zeltlager</span></button></li>
+                    <li><button onclick="switchTab('vorstand')" data-nav="vorstand" class="nav-btn px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-emerald-50 transition">Vorstand</button></li>
+                    <li><button onclick="switchTab('termine')" data-nav="termine" class="nav-btn px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-emerald-50 transition">Termine</button></li>
+                    <li><button onclick="switchTab('fischerpruefung')" data-nav="fischerpruefung" class="nav-btn px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-emerald-50 transition flex items-center gap-1.5"><i data-lucide="graduation-cap" class="w-4 h-4 text-emerald-300"></i><span>Fischerprüfung</span></button></li>
+                    <li><button onclick="switchTab('downloads')" data-nav="downloads" class="nav-btn px-3.5 py-2.5 rounded-xl hover:bg-white/10 text-emerald-50 transition">Downloads</button></li>
+                    <li><button onclick="switchTab('mitglied-werden')" data-nav="mitglied-werden" class="nav-btn px-3.5 py-2.5 rounded-xl bg-emerald-500/20 border border-emerald-300/40 hover:bg-emerald-500/30 text-emerald-100 font-semibold transition flex items-center gap-1.5"><i data-lucide="user-plus" class="w-4 h-4 text-emerald-300"></i><span>Mitgliedsantrag</span></button></li>
+                    <li><button onclick="switchTab('mitglieder-verwaltung')" data-nav="mitglieder-verwaltung" class="nav-btn px-3.5 py-2.5 rounded-xl bg-lake-900/50 border border-lake-300/30 hover:bg-lake-900/80 text-lake-100 font-semibold transition flex items-center gap-1.5" title="Hier wird hinterlegt, wer sich mit welcher Mitgliedsnummer anmelden kann"><i data-lucide="key-round" class="w-4 h-4 text-amber-300"></i><span>Logins verwalten</span></button></li>
+                </ul>
+
+                <!-- Mobile Navigation -->
+                <ul id="mobile-menu" class="hidden lg:hidden pb-4 space-y-1.5 border-t border-white/15 pt-3 text-sm">
+                    <li><button onclick="switchTab('startseite')" data-nav="startseite" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-white text-forest-900 font-semibold">Startseite</button></li>
+                    <li><button onclick="switchTab('gewaesser')" data-nav="gewaesser" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl text-emerald-50 hover:bg-white/10">Gewässer (Alle 5 Weiher & Angelplätze)</button></li>
+                    <li><button onclick="switchTab('tageskarten')" data-nav="tageskarten" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl text-emerald-50 hover:bg-white/10">Tageskarten (hejfish • 18,00 €)</button></li>
+                    <li><button onclick="switchTab('jugendgruppe')" data-nav="jugendgruppe" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl text-emerald-50 hover:bg-white/10">Jugendgruppe (Fotos & Zeltlager-Anmeldung)</button></li>
+                    <li><button onclick="switchTab('vorstand')" data-nav="vorstand" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl text-emerald-50 hover:bg-white/10">Vorstandschaft (mit Fotos)</button></li>
+                    <li><button onclick="switchTab('termine')" data-nav="termine" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl text-emerald-50 hover:bg-white/10">Termine 2026</button></li>
+                    <li><button onclick="switchTab('fischerpruefung')" data-nav="fischerpruefung" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl text-emerald-50 hover:bg-white/10">Fischerprüfung (Infos & Online-Anmeldung)</button></li>
+                    <li><button onclick="switchTab('downloads')" data-nav="downloads" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl text-emerald-50 hover:bg-white/10">Downloads</button></li>
+                    <li><button onclick="switchTab('mitglied-werden')" data-nav="mitglied-werden" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-emerald-500/20 text-emerald-100 font-semibold">Digitaler Mitgliedsantrag</button></li>
+                    <li><button onclick="switchTab('mitglieder-verwaltung')" data-nav="mitglieder-verwaltung" class="nav-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-lake-900/50 text-amber-200 font-semibold">Mitglieder-Logins verwalten (Admin-Liste)</button></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-7">
+
+            <!-- Linke Hauptspalte (2/3 Breite) -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- NEU: DYNAMISCHE GEWÄSSER-DETAILSEITE (Wird beim Klick auf einen Weiher angezeigt) -->
+                <section id="tab-gewaesser-detail" class="tab-content space-y-6">
+                    <div id="lake-detail-container" class="space-y-6"></div>
+                </section>
+
+                <!-- ==========================================
+                     TAB 8: FISCHERPRÜFUNG & ONLINE-ANMELDUNG
+                =========================================== -->
+                <section id="tab-fischerpruefung" class="tab-content space-y-6">
+                    <!-- Infos zum Vorbereitungslehrgang & Prüfung -->
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-5">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-forest-600">Staatliche Fischerprüfung Baden-Württemberg (LFVBW)</span>
+                                <h2 class="text-2xl font-serif font-bold text-slate-900">Fischerprüfung & Vorbereitungskurs</h2>
+                            </div>
+                            <span class="text-xs font-semibold bg-emerald-100 text-emerald-800 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                                <i data-lucide="graduation-cap" class="w-4 h-4"></i> Ab 10 Jahren möglich
+                            </span>
+                        </div>
+
+                        <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                            Um in Baden-Württemberg den staatlichen Fischereischein auf Lebenszeit zu erwerben, ist die Teilnahme an einem <strong>anerkannten Vorbereitungslehrgang (mind. 30 Pflichtstunden inkl. Praxistag)</strong> sowie das Bestehen der staatlichen Sachkundeprüfung erforderlich. Unser Verein begleitet dich bis zum Prüfungszeugnis!
+                        </p>
+
+                        <!-- Die 5 Prüfungs-Sachgebiete -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3.5 rounded-xl bg-forest-50 border border-forest-100">
+                                <span class="font-bold text-forest-900 block mb-0.5">1. Allgemeine Fischkunde</span>
+                                <span class="text-slate-600">Körperbau, Organe, Sinne & Fischkrankheiten</span>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-forest-50 border border-forest-100">
+                                <span class="font-bold text-forest-900 block mb-0.5">2. Spezielle Fischkunde</span>
+                                <span class="text-slate-600">Erkennung heimischer Süßwasserfische, Neunaugen & Krebse</span>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-lake-50 border border-lake-100">
+                                <span class="font-bold text-lake-900 block mb-0.5">3. Gewässerökologie & Fischhege</span>
+                                <span class="text-slate-600">Wasserqualität, Fischregionen, Besatz & Naturschutz</span>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-lake-50 border border-lake-100">
+                                <span class="font-bold text-lake-900 block mb-0.5">4. Gerätekunde & Fangtechnik</span>
+                                <span class="text-slate-600">Ruten, Rollen, Schnüre, Knoten & waidgerechtes Versorgen</span>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-100 sm:col-span-2 lg:col-span-1">
+                                <span class="font-bold text-emerald-900 block mb-0.5">5. Gesetzeskunde</span>
+                                <span class="text-slate-600">Fischereigesetz BW, LFischVO, Tierschutz & Naturschutzrecht</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl text-xs sm:text-sm text-amber-950">
+                            <p class="font-bold mb-1 flex items-center gap-1.5">
+                                <i data-lucide="info" class="w-4 h-4 text-amber-600 shrink-0"></i>
+                                Wichtiger Hinweis zu den Pflichtangaben:
+                            </p>
+                            <p>
+                                Für die offizielle Prüfungszulassung und die Ausstellung des staatlichen Prüfungszeugnisses werden zwingend der <strong>exakte Vor- und Familienname, das Geburtsdatum sowie der Geburtsort (wie im Personalausweis)</strong> benötigt. Bei Teilnehmern unter 18 Jahren ist die Zustimmung eines gesetzlichen Vertreters erforderlich.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- ONLINE-ANMELDEFORMULAR ZUR FISCHERPRÜFUNG -->
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-6">
+                        <div class="border-b border-slate-200 pb-4">
+                            <span class="text-xs font-bold uppercase tracking-wider text-lake-600">Direkte Online-Anmeldung beim FNV Aulendorf e.V.</span>
+                            <h3 class="text-xl font-serif font-bold text-slate-900">Anmeldeformular zur Fischerprüfung & Vorbereitungskurs</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                                Fülle alle prüfungsrelevanten Felder aus. Nach dem Absenden erhältst du sofort eine druckfertige Anmeldebestätigung und kannst die Daten direkt per Klick an die Kursleitung übermitteln.
+                            </p>
+                        </div>
+
+                        <form id="exam-registration-form" onsubmit="submitExamRegistration(event)" class="space-y-5">
+                            <!-- 1. Kurswahl & Lehrform -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-forest-50/60 p-4 rounded-xl border border-forest-100">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Gewünschter Prüfungskurs / Zeitraum *</label>
+                                    <select id="fp-course" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:border-forest-600">
+                                        <option value="Frühjahrslehrgang & Prüfung Mai 2027 (Fischerheim Haslach)">🌱 Frühjahrslehrgang & Prüfung Mai 2027 (Fischerheim Haslach)</option>
+                                        <option value="Herbstlehrgang & Prüfung November 2027 (Fischerheim Haslach)">🍂 Herbstlehrgang & Prüfung November 2027 (Fischerheim Haslach)</option>
+                                        <option value="Kombi-Kurs: Online-Theorie + Praxistag am Haslacher Weiher">💻 Kombi-Kurs: Online-Theorie (LFVBW) + Praxistag am Haslacher Weiher</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Teilnehmer-Kategorie *</label>
+                                    <select id="fp-category" required onchange="toggleMinorFields(this.value)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:border-forest-600">
+                                        <option value="Erwachsene (ab 18 Jahren)">Erwachsene (ab 18 Jahren)</option>
+                                        <option value="Jugendliche / Schüler (10 bis 17 Jahre)">Jugendliche / Schüler (10 bis 17 Jahre)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 2. Personenstand für das Prüfungszeugnis -->
+                            <div class="space-y-3">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-forest-700">Persönliche Angaben (für das amtliche Prüfungszeugnis)</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Vorname (laut Ausweis) *</label>
+                                        <input id="fp-firstname" type="text" required placeholder="z. B. Maximilian" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nachname / Familienname *</label>
+                                        <input id="fp-lastname" type="text" required placeholder="z. B. Mustermann" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Geburtsdatum (Mindestalter 10 Jahre) *</label>
+                                        <input id="fp-dob" type="date" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Geburtsort (Pflichtfeld für Prüfungszeugnis!) *</label>
+                                        <input id="fp-birthplace" type="text" required placeholder="z. B. Bad Waldsee / Ravensburg" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Staatsangehörigkeit</label>
+                                        <input id="fp-nationality" type="text" value="Deutsch" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Personalausweis- oder Reisepass-Nr. (optional)</label>
+                                        <input id="fp-idcard" type="text" placeholder="Zur Identitätsprüfung am Prüfungstag" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Anschrift & Kontaktdaten -->
+                            <div class="space-y-3">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-forest-700">Wohnanschrift & Erreichbarkeit</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Straße & Hausnummer *</label>
+                                        <input id="fp-street" type="text" required placeholder="Schussenstraße 15" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">PLZ & Wohnort *</label>
+                                        <input id="fp-city" type="text" required placeholder="88326 Aulendorf" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Telefon / Mobilnummer (für Rückfragen) *</label>
+                                        <input id="fp-phone" type="tel" required placeholder="0172 / 1234567" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">E-Mail-Adresse (für Einladung & Zugangsdaten) *</label>
+                                        <input id="fp-email" type="email" required placeholder="teilnehmer@beispiel.de" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Zusatzfeld für Minderjährige (unter 18) -->
+                            <div id="fp-minor-box" class="hidden p-4 rounded-xl bg-lake-50 border border-lake-200 space-y-3">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-lake-800 flex items-center gap-1.5">
+                                    <i data-lucide="users" class="w-4 h-4"></i>
+                                    Angaben des gesetzlichen Vertreters (bei Teilnehmern unter 18 Jahren)
+                                </h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Vor- & Nachname Elternteil / Erziehungsberechtigter</label>
+                                        <input id="fp-parent-name" type="text" placeholder="Name der Eltern" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Telefonnummer Erziehungsberechtigter</label>
+                                        <input id="fp-parent-phone" type="tel" placeholder="0172 / ..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5. Lernmaterial & Vereinsinteresse -->
+                            <div class="space-y-2.5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">Lernunterlagen & Zusatzoptionen</h4>
+                                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
+                                    <input id="fp-material" type="checkbox" checked class="mt-0.5 rounded text-forest-600">
+                                    <span>Ich möchte das offizielle <strong>Prüfungsfragen-Übungsheft / Online-Lernprogramm (LFVBW)</strong> über den Verein mitbestellen.</span>
+                                </label>
+                                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
+                                    <input id="fp-club-interest" type="checkbox" class="mt-0.5 rounded text-forest-600">
+                                    <span>Ich interessiere mich nach bestandener Fischerprüfung für eine <strong>Mitgliedschaft im FNV Aulendorf e.V.</strong> (bzw. in der Jugendgruppe).</span>
+                                </label>
+                                <div class="pt-1">
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Bemerkungen / Fragen an den Lehrgangsleiter (optional)</label>
+                                    <input id="fp-notes" type="text" placeholder="z. B. Vorkenntnisse, Wunschtermin für Praxistag..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+                                </div>
+                            </div>
+
+                            <label class="flex items-start gap-2.5 text-xs text-slate-700 bg-forest-50/70 p-3.5 rounded-xl border border-forest-200 cursor-pointer">
+                                <input type="checkbox" required class="mt-0.5 rounded text-forest-600">
+                                <span>Ich melde mich verbindlich zum Vorbereitungslehrgang und zur staatlichen Fischerprüfung an und willige ein, dass meine Daten zur Lehrgangs- und Prüfungsabwicklung (gemäß Fischereigesetz BW / LFVBW) verarbeitet werden. *</span>
+                            </label>
+
+                            <button type="submit" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-forest-600 to-lake-600 hover:from-forest-700 hover:to-lake-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition">
+                                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                <span>Verbindlich zur Fischerprüfung anmelden</span>
+                            </button>
+                        </form>
+
+                        <!-- Bestätigungs-Ansicht nach Absenden -->
+                        <div id="exam-registration-confirmation" class="hidden p-6 rounded-2xl bg-emerald-50 border-2 border-emerald-500 space-y-4"></div>
+                    </div>
+                </section>
+
+                <!-- ==========================================
+                     TAB 9: MITGLIEDER-ZUGÄNGE VERWALTEN (WO WERDEN MITGLIEDSNUMMERN HINTERLEGT?)
+                =========================================== -->
+                <section id="tab-mitglieder-verwaltung" class="tab-content space-y-6">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-6">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-lake-600">Vorstands-Cockpit & Zugangs-Datenbank</span>
+                                <h2 class="text-2xl font-serif font-bold text-slate-900">Wer darf sich mit welcher Mitgliedsnummer anmelden?</h2>
+                            </div>
+                            <span class="text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                                <i data-lucide="key-round" class="w-4 h-4"></i> Test-Zugang: Nr. 1 / Passwort: abc
+                            </span>
+                        </div>
+
+                        <!-- Verständliche Erklärung: Wo wird das hinterlegt? -->
+                        <div class="bg-gradient-to-br from-lake-50 to-forest-50 border border-lake-200 rounded-2xl p-5 space-y-3 text-xs sm:text-sm text-slate-700">
+                            <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                                <i data-lucide="database" class="w-5 h-5 text-lake-600"></i>
+                                Wo wird technisch festgelegt, wer sich mit welcher Mitgliedsnummer einloggen kann?
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                                <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1.5">
+                                    <span class="text-xs font-bold text-forest-700 uppercase">1. Direkt hier in der Website (Sofort testbar)</span>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        In dieser Datei ist eine Liste <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-forest-800">DEFAULT_MEMBERS_DB</code> im Code hinterlegt (inkl. <strong>Mitgliedsnummer <code>1</code></strong> und <strong>Passwort <code>abc</code></strong>). Über das Formular unten kannst du direkt neue Mitgliedsnummern + Passwörter hinzufügen oder löschen – sie werden sofort im Browser (<code class="bg-slate-100 px-1 rounded">localStorage</code>) gespeichert.
+                                    </p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1.5">
+                                    <span class="text-xs font-bold text-lake-700 uppercase">2. Im späteren Live-Betrieb im Internet</span>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        Wenn du ein neues Mitglied unten einträgst und auf <strong>„Aktualisierte Mitgliederliste für Code kopieren“</strong> klickst, kannst du die Liste direkt in deiner <code class="bg-slate-100 px-1 rounded">index.html</code> speichern – oder wir knüpfen sie kostenlos an eine kleine Online-Datenbank (z. B. <em>Supabase</em> oder <em>Firebase</em>) an, damit der Vorstand Zugänge live für alle Handys freischalten kann.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formular: Neues Mitglied / neuen Login anlegen -->
+                        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-2">
+                                <i data-lucide="user-plus" class="w-4 h-4 text-forest-600"></i>
+                                Neuen Mitglieder-Login anlegen oder Passwort ändern
+                            </h3>
+                            <form onsubmit="addOrUpdateMemberAccount(event)" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Mitgliedsnummer *</label>
+                                    <input id="admin-mem-no" type="text" required placeholder="z. B. 15" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Vor- & Nachname *</label>
+                                    <input id="admin-mem-name" type="text" required placeholder="z. B. Peter Fischer" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Passwort *</label>
+                                    <input id="admin-mem-pass" type="text" required placeholder="z. B. weiher2026" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white font-mono">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Rolle im Verein</label>
+                                    <select id="admin-mem-role" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white">
+                                        <option value="Aktives Mitglied">Aktives Mitglied</option>
+                                        <option value="Vorstand / Admin">Vorstand / Admin</option>
+                                        <option value="Gewässerwart">Gewässerwart</option>
+                                        <option value="Jugendgruppe">Jugendgruppe</option>
+                                    </select>
+                                </div>
+                                <div class="sm:col-span-4 flex flex-wrap items-center justify-between gap-2 pt-1">
+                                    <span class="text-xs text-slate-500">Tipp: Existiert die Mitgliedsnummer bereits, wird das Passwort/Name aktualisiert.</span>
+                                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs font-bold flex items-center gap-1.5 shadow transition">
+                                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                        <span>Mitgliedsnummer freischalten / speichern</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tabelle aller aktuell hinterlegten Mitglieder-Logins -->
+                        <div class="space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h3 class="font-bold text-slate-900 text-sm sm:text-base">Aktuell freigeschaltete Mitgliedsnummern & Passwörter</h3>
+                                <button onclick="copyMembersDbCode()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold flex items-center gap-1.5">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Aktualisierte Mitgliederliste für Code kopieren</span>
+                                </button>
+                            </div>
+                            <div class="overflow-x-auto rounded-xl border border-slate-200">
+                                <table class="w-full text-left text-xs sm:text-sm">
+                                    <thead class="bg-slate-100 text-slate-700 uppercase text-[11px] font-bold">
+                                        <tr>
+                                            <th class="py-3 px-4">Mitglieds-Nr.</th>
+                                            <th class="py-3 px-4">Name des Mitglieds</th>
+                                            <th class="py-3 px-4">Rolle</th>
+                                            <th class="py-3 px-4">Passwort</th>
+                                            <th class="py-3 px-4 text-right">Aktion / Direkt-Login</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-members-table-body" class="divide-y divide-slate-200 bg-white"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-downloads" class="tab-content space-y-6">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-4">
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Downloads & Digitale Formulare</h2>
+                        <p class="text-slate-600 text-sm">Alle wichtigen Dokumente sowie unser neuer digitaler Online-Mitgliedsantrag:</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-4 rounded-xl border-2 border-forest-500/40 bg-forest-50/60">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-forest-600 text-white flex items-center justify-center shrink-0">
+                                        <i data-lucide="file-signature" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 text-sm sm:text-base">Digitaler Mitgliedsantrag (Online-Formular)</h4>
+                                        <p class="text-xs text-slate-600">Direkt im Browser ausfüllen, unterschreiben & als PDF speichern</p>
+                                    </div>
+                                </div>
+                                <button onclick="switchTab('mitglied-werden')" class="px-4 py-2 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs font-bold shrink-0">
+                                    Jetzt öffnen
+                                </button>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+                                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-slate-900 text-sm sm:text-base">Vereinssatzung & Gewässerordnung (PDF)</h4>
+                                        <p class="text-xs text-slate-500">Mindestmaße, Schonzeiten & Bestimmungen für alle 5 Weiher</p>
+                                    </div>
+                                </div>
+                                <button onclick="showNotice('Die PDF-Gewässerordnung kann beim Webhosting direkt verknüpft werden.')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold shrink-0">
+                                    PDF laden
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ÜBER UNS / IMPRESSUM / DATENSCHUTZ -->
+                <section id="tab-ueber-uns" class="tab-content space-y-6">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-4">
+                        <h2 class="text-2xl font-serif font-bold text-slate-900">Über den Fischer- und Naturschutzverein Aulendorf e.V.</h2>
+                        <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+                            Der Fischer- und Naturschutzverein Aulendorf e.V. verbindet seit Jahrzehnten gelebten Natur- und Artenschutz mit der waidgerechten Angelfischerei in Oberschwaben. Unser Vereinsheim in Haslach 3 direkt am Haslacher Weiher ist das Zentrum unseres Vereinslebens.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="tab-impressum" class="tab-content space-y-6">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-3 text-sm text-slate-700">
+                        <h2 class="text-2xl font-serif font-bold text-slate-900 mb-2">Impressum</h2>
+                        <p><strong>Fischer- und Naturschutzverein Aulendorf e.V.</strong><br>Haslach 3<br>88326 Aulendorf</p>
+                        <p><strong>Vertreten durch den 1. Vorsitzenden:</strong><br>Thomas Fradl • Tel.: 0172 / 8876468 • E-Mail: <a href="mailto:info@fnv-aulendorf.de" class="text-lake-600 underline">info@fnv-aulendorf.de</a></p>
+                    </div>
+                </section>
+
+                <section id="tab-datenschutz" class="tab-content space-y-6">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-3 text-sm text-slate-700">
+                        <h2 class="text-2xl font-serif font-bold text-slate-900 mb-2">Datenschutzerklärung</h2>
+                        <p>Der Schutz Ihrer personenbezogenen Daten ist dem Fischer- und Naturschutzverein Aulendorf e.V. ein wichtiges Anliegen. Eingaben im digitalen Mitgliedsantrag oder bei der Jugend-Anmeldung werden lokal in Ihrem Browser verarbeitet und ausschließlich zweckgebunden für die Vereinsarbeit verwendet.</p>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Rechte Seitenleiste (1/3 Breite) -->
+            <aside class="space-y-6">
+
+                <!-- NEU: Widget 0: Mitglieder-Login & Insider-Status in der Seitenleiste -->
+                <div id="sidebar-member-widget" class="bg-gradient-to-br from-forest-800 via-forest-700 to-lake-800 text-white rounded-2xl p-5 shadow-md space-y-3.5 border border-emerald-400/20">
+                    <!-- Wird dynamisch per JS gefüllt (Login-Maske oder Eingeloggt-Profil) -->
+                </div>
+
+                <!-- Widget 1: Fischerheim Haslach & Google Maps Route -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-forest-100 space-y-3.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-forest-700 bg-forest-50 px-2.5 py-1 rounded-md">Vereinsheim</span>
+                        <span class="text-xs text-slate-500">Haslach 3</span>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900">Anfahrt zum Fischerheim</h3>
+                    <div class="rounded-xl overflow-hidden border border-slate-200 h-36 bg-slate-100">
+                        <iframe title="Karte Fischerheim Haslach" class="w-full h-full border-0" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=9.615%2C47.915%2C9.655%2C47.938&layer=mapnik&marker=47.9261%2C9.6358"></iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Haslach+3,+88326+Aulendorf&travelmode=driving" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition">
+                        <i data-lucide="navigation" class="w-3.5 h-3.5"></i>
+                        <span>Route vom aktuellen Standort</span>
+                    </a>
+                </div>
+
+                <!-- Widget 2: Schnellwahl der 5 Vereinsgewässer -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-forest-100">
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <i data-lucide="waves" class="w-4 h-4 text-lake-600"></i>
+                        <span>Unsere 5 Weiher (Direktwahl)</span>
+                    </h3>
+                    <ul class="space-y-2 text-xs sm:text-sm">
+                        <li><button onclick="openLakeDetail('haslacher')" class="w-full text-left px-3 py-2 rounded-xl bg-forest-50/70 hover:bg-forest-100 text-forest-900 font-medium flex items-center justify-between transition"><span>1. Haslacher Weiher</span><i data-lucide="chevron-right" class="w-4 h-4 text-forest-600"></i></button></li>
+                        <li><button onclick="openLakeDetail('sattenbeuren')" class="w-full text-left px-3 py-2 rounded-xl bg-lake-50/70 hover:bg-lake-100 text-lake-900 font-medium flex items-center justify-between transition"><span>2. Baggersee Sattenbeuren</span><i data-lucide="chevron-right" class="w-4 h-4 text-lake-600"></i></button></li>
+                        <li><button onclick="openLakeDetail('mahlweiher')" class="w-full text-left px-3 py-2 rounded-xl bg-forest-50/70 hover:bg-forest-100 text-forest-900 font-medium flex items-center justify-between transition"><span>3. Mahlweiher</span><i data-lucide="chevron-right" class="w-4 h-4 text-forest-600"></i></button></li>
+                        <li><button onclick="openLakeDetail('wannenberger')" class="w-full text-left px-3 py-2 rounded-xl bg-forest-50/70 hover:bg-forest-100 text-forest-900 font-medium flex items-center justify-between transition"><span>4. Wannenberger Weiher</span><i data-lucide="chevron-right" class="w-4 h-4 text-forest-600"></i></button></li>
+                        <li><button onclick="openLakeDetail('neuhauser')" class="w-full text-left px-3 py-2 rounded-xl bg-forest-50/70 hover:bg-forest-100 text-forest-900 font-medium flex items-center justify-between transition"><span>5. Neuhauser Weiher</span><i data-lucide="chevron-right" class="w-4 h-4 text-forest-600"></i></button></li>
+                    </ul>
+                </div>
+
+                <!-- Widget 3: Neueste Beiträge -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-forest-100">
+                    <h3 class="text-base font-bold text-slate-900 mb-3">Neueste Beiträge</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><button onclick="switchTab('startseite')" class="text-left text-lake-600 hover:underline font-medium">Jahreshauptversammlung 2026</button></li>
+                        <li><button onclick="switchTab('startseite')" class="text-left text-lake-600 hover:underline font-medium">Jahreskartenausgabe 2026</button></li>
+                        <li><button onclick="switchTab('startseite')" class="text-left text-lake-600 hover:underline font-medium">Beitragseinzug 2026</button></li>
+                        <li><button onclick="switchTab('startseite')" class="text-left text-lake-600 hover:underline font-medium">Bestellung Forellen Weihnachten</button></li>
+                    </ul>
+                </div>
+
+                <!-- Widget 4: hejfish Tageskarten Box -->
+                <div class="bg-gradient-to-br from-lake-700 to-forest-800 text-white rounded-2xl p-5 shadow-md space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider bg-white/15 px-2.5 py-1 rounded-md text-emerald-200">hejfish Partner</span>
+                        <span class="text-xl font-extrabold text-emerald-300">18,00 €</span>
+                    </div>
+                    <h3 class="text-base font-bold">Tageskarten für Mitglieder</h3>
+                    <p class="text-xs text-lake-100 leading-relaxed">
+                        Für alle 5 Vereinsgewässer (01.03. – 31.10.) online über hejfish buchbar.
+                    </p>
+                    <button onclick="switchTab('tageskarten')" class="w-full py-2.5 px-4 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-bold transition">
+                        Preise & 5-Schritte-Anleitung
+                    </button>
+                </div>
+
+            </aside>
+        </div>
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white text-sm px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3 max-w-sm">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+        <span id="toast-text">Hinweis</span>
+    </div>
+
+    <!-- =====================================================
+         MITGLIEDER-LOGIN MODAL (Simulation mit Nr. 1 / Passwort abc)
+    ====================================================== -->
+    <div id="login-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-forest-100 space-y-5 relative animate-[fadeIn_0.2s_ease-out]">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-forest-600 to-lake-600 text-white flex items-center justify-center shadow">
+                    <i data-lucide="key-round" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-forest-600">Interner Vereinsbereich</span>
+                    <h3 class="text-xl font-serif font-bold text-slate-900">Mitglieder-Login</h3>
+                </div>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Melde dich mit deiner <strong>Mitgliedsnummer</strong> und deinem <strong>Passwort</strong> an, um die <strong>genauen Angelplätze, Uferzonen, Sperrgebiete und Mitglieder-Kommentare</strong> an unseren 5 Weihern freizuschalten.
+            </p>
+
+            <!-- Demo-Zugang Schnellhilfe -->
+            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 text-xs text-emerald-950 flex items-center justify-between gap-2">
+                <div>
+                    <span class="font-bold block text-emerald-800">Test-Zugang zum Ausprobieren:</span>
+                    <span>Mitgliedsnummer: <strong class="font-mono bg-white px-1.5 py-0.5 rounded border">1</strong> • Passwort: <strong class="font-mono bg-white px-1.5 py-0.5 rounded border">abc</strong></span>
+                </div>
+                <button type="button" onclick="fillDemoLogin()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold shrink-0">
+                    1 / abc einfügen
+                </button>
+            </div>
+
+            <form onsubmit="handleMemberLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Mitgliedsnummer *</label>
+                    <input id="login-member-no" type="text" required placeholder="z. B. 1" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-mono focus:outline-none focus:border-forest-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Passwort *</label>
+                    <input id="login-member-pass" type="password" required placeholder="Passwort (z. B. abc)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-forest-600">
+                </div>
+
+                <div id="login-error-msg" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 font-medium"></div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-forest-600 to-lake-600 hover:from-forest-700 hover:to-lake-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition">
+                    <i data-lucide="log-in" class="w-4 h-4"></i>
+                    <span>Jetzt anmelden & Gewässer-Details freischalten</span>
+                </button>
+            </form>
+
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <span>Wo werden Zugänge verwaltet?</span>
+                <button onclick="closeLoginModal(); switchTab('mitglieder-verwaltung');" class="text-lake-600 hover:underline font-semibold flex items-center gap-1">
+                    <i data-lucide="settings" class="w-3.5 h-3.5"></i> Mitglieder-Datenbank öffnen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-forest-900 via-slate-900 to-lake-900 text-slate-300 text-sm py-9 px-4 mt-12 border-t border-white/10">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                    <i data-lucide="fish" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="text-white font-bold block">Fischer- und Naturschutzverein Aulendorf e.V.</span>
+                    <span class="text-xs text-slate-400">Fischerheim: Haslach 3, 88326 Aulendorf</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-5 text-xs">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Haslach+3,+88326+Aulendorf&travelmode=driving" target="_blank" rel="noopener noreferrer" class="text-emerald-300 hover:underline font-semibold">Route zum Fischerheim</a>
+                <button onclick="switchTab('mitglied-werden')" class="hover:text-white transition">Digitaler Mitgliedsantrag</button>
+                <button onclick="switchTab('impressum')" class="hover:text-white transition">Impressum</button>
+                <button onclick="switchTab('datenschutz')" class="hover:text-white transition">Datenschutz</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =====================================================
+        // 0. MITGLIEDER-DATENBANK (HIER WIRD FESTGELEGT, WER SICH ANMELDEN DARF)
+        // =====================================================
+        // Voreingestellte Mitglieder-Zugänge (inkl. Wunsch-Simulation: Mitgliedsnummer "1", Passwort "abc")
+        const DEFAULT_MEMBERS_DB = [
+            { memberNo: '1', password: 'abc', name: 'Thomas Fradl', role: '1. Vorsitzender (Admin)' },
+            { memberNo: '2', password: 'fischer2026', name: 'Michael Schoch', role: 'Gewässerwart' },
+            { memberNo: '10', password: 'petriheil', name: 'Max Mustermann', role: 'Aktives Mitglied' },
+            { memberNo: '25', password: 'weiher', name: 'Sven Schwer', role: 'Jugendwart' }
+        ];
+
+        function getMembersDB() {
+            try {
+                const stored = JSON.parse(localStorage.getItem('fnv_members_db'));
+                if (Array.isArray(stored) && stored.length > 0) return stored;
+            } catch (e) {}
+            return DEFAULT_MEMBERS_DB;
+        }
+
+        function saveMembersDB(list) {
+            try {
+                localStorage.setItem('fnv_members_db', JSON.stringify(list));
+            } catch (e) {}
+        }
+
+        function getLoggedInMember() {
+            try {
+                const user = JSON.parse(localStorage.getItem('fnv_logged_in_member'));
+                return user || null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // =====================================================
+        // 1. DATEN DER 5 VEREINSGEWÄSSER + EXKLUSIVE MITGLIEDER-ANGELPLÄTZE & KOMMENTARE
+        // =====================================================
+        const LAKES_DATA = {
+            haslacher: {
+                id: 'haslacher',
+                name: 'Haslacher Weiher',
+                subtitle: 'Aulendorf-Haslach • Direkt am Fischerheim (Haslach 3)',
+                area: 'ca. 2,8 ha',
+                depth: 'bis ca. 3,2 m',
+                price: '18,00 € (Tageskarte für Mitglieder via hejfish)',
+                coords: '47.9261,9.6358',
+                bbox: '9.620%2C47.918%2C9.650%2C47.934',
+                fish: ['Karpfen', 'Schleie', 'Hecht', 'Zander', 'Flussbarsch', 'Rotauge', 'Rotfeder'],
+                shore: 'Gepflegtes Ufer direkt am Vereinsheim, charakteristischer Schilfgürtel, Stegbereich und gut zugängliche Angelplätze.',
+                parking: 'Direkt am Fischerheim Haslach (Haslach 3, 88326 Aulendorf) auf den ausgewiesenen Vereinsflächen.',
+                rules: 'Saison 01.03. – 31.10. • Max. 2 Handangeln • Schilf- und Laichzonen sind unbedingt zu schonen • Fangbuch auf hejfish führen.',
+                description: 'Der Haslacher Weiher liegt unmittelbar vor unserem Fischerheim in Haslach 3 und bildet das Herzstück unseres Vereinslebens. Durch seine abwechslungsreiche Uferstruktur mit Seerosen- und Schilffeldern bietet er hervorragende Bedingungen für Fried- und Raubfischangler.',
+                spots: [
+                    { code: 'A1', type: 'allowed', x: 34, y: 74, title: 'Holzsteg vor dem Fischerheim (Nordufer)', depth: '2,4 m', ground: 'Fester Schlamm / Krautkante', tip: 'Top-Platz auf Schleie und Satzkarpfen am frühen Morgen direkt an der Schilfkante.' },
+                    { code: 'A2', type: 'allowed', x: 68, y: 66, title: 'Ostufer an der Straßenleitplanke', depth: '2,9 m', ground: 'Kiesig / hart', tip: 'Sehr guter Platz für Zander (Köderfisch) und Hecht im Herbst.' },
+                    { code: 'A3', type: 'allowed', x: 48, y: 26, title: 'Südufer Waldkante (Ruhige Bucht)', depth: '3,2 m', ground: 'Weicher Naturgrund', tip: 'Tiefste Rinne des Weihers – ideal für große Spiegelkarpfen.' },
+                    { code: 'S1', type: 'restricted', x: 18, y: 52, title: 'SPERRZONE: Schilf- & Laichgebiet Westbucht', depth: '0,8 – 1,4 m', ground: 'Dichtes Schilf & Seerosen', tip: 'Ganzjähriges Angel- und Betretungsverbot zum Schutz der Fischbrut und Wasservögel!' },
+                    { code: 'P1', type: 'parking', x: 46, y: 86, title: 'Vereinsparkplatz & Fischerheim Haslach 3', depth: '–', ground: 'Befestigter Hof', tip: 'Parken für Mitglieder frei. Schlüsselausgabe freitags ab 18:00 Uhr.' }
+                ],
+                defaultComments: [
+                    { author: 'Thomas Fradl (#1)', role: '1. Vorsitzender', date: 'Vor 2 Tagen', spot: 'A1 – Holzsteg Fischerheim', category: 'Gewässer-Hinweis', text: 'Der Stegbereich am Fischerheim wurde beim Arbeitseinsatz frei geschnitten. Bitte beim Auswerfen links den Schilfgürtel (Sperrzone West) mindestens 10 Meter meiden.' },
+                    { author: 'Michael Schoch (#2)', role: 'Gewässerwart', date: 'Letzte Woche', spot: 'A2 – Ostufer', category: 'Fangmeldung & Tipp', text: 'Am Ostufer auf 2,8m Tiefe gingen gestern Abend zwei schöne Schleien (43 cm und 46 cm) auf Tauwurm nahe der Krautbank.' }
+                ]
+            },
+            sattenbeuren: {
+                id: 'sattenbeuren',
+                name: 'Baggersee Sattenbeuren',
+                subtitle: 'Aulendorf-Sattenbeuren / Reute • Großes Baggersee-Gewässer',
+                area: 'ca. 6,5 ha',
+                depth: 'bis ca. 8,5 m',
+                price: '18,00 € (Tageskarte für Mitglieder via hejfish)',
+                coords: '47.9365,9.6695',
+                bbox: '9.652%2C47.928%2C9.685%2C47.945',
+                fish: ['Hecht', 'Zander', 'Karpfen', 'Regenbogenforelle', 'Flussbarsch', 'Wels', 'Brasse'],
+                shore: 'Kiesige Uferbereiche, tief abfallende Kanten und weitläufige Wasserfläche.',
+                parking: 'Zufahrt und Parken gemäß Vereinsbeschilderung (Schlüssel für Schranke/Zugang am Fischerheim gegen 50 € Pfand).',
+                rules: 'Saison 01.03. – 31.10. • Gesperrt vom 11.05.–15.05.2026 vor dem Gemeinschaftsfischen (16./17.05.2026).',
+                description: 'Der Baggersee Sattenbeuren ist unser größtes und tiefstes Vereinsgewässer. Hier finden traditionell das Anfischen im März sowie das große Gemeinschafts-, Familien- und Nachtfischen im Mai statt.',
+                spots: [
+                    { code: 'B1', type: 'allowed', x: 28, y: 72, title: 'Kiesbank Westufer (Haupteinstieg)', depth: '4,5 – 6,0 m', ground: 'Steil abfallende Kieskante', tip: 'Perfekt beim Anfischen auf Regenbogenforellen und im Sommer mit Gummifisch auf Barsch & Zander.' },
+                    { code: 'B2', type: 'allowed', x: 64, y: 74, title: 'Süd-Ost-Plateau', depth: '3,5 – 7,2 m', ground: 'Kiesplateau mit Muschelbank', tip: 'Beliebter Platz beim Nachtfischen auf Karpfen und Wels.' },
+                    { code: 'B3', type: 'allowed', x: 54, y: 24, title: 'Nordufer Tiefwasser-Kante', depth: 'bis 8,5 m', ground: 'Sauberer Kiesgrund', tip: 'Im Hochsommer stehen hier die kapitalen Hechte im Freiwasser.' },
+                    { code: 'S1', type: 'restricted', x: 82, y: 45, title: 'SPERRZONE: Steilufer / Biotopzone Ost', depth: '–', ground: 'Uferschutzbereich', tip: 'Kein Angelplatz – Uferbetretung aus Sicherheits- und Naturschutzgründen untersagt.' },
+                    { code: 'P1', type: 'parking', x: 20, y: 85, title: 'Schranke & Vereinsparkplatz Sattenbeuren', depth: '–', ground: 'Schotterplatz', tip: 'Zufahrt mit Vereinsschlüssel (50 € Pfand am Fischerheim). Schranke nach Durchfahrt sofort wieder verschließen!' }
+                ],
+                defaultComments: [
+                    { author: 'Max Mustermann (#10)', role: 'Aktives Mitglied', date: 'Vor 4 Tagen', spot: 'B1 – Kiesbank Westufer', category: 'Fangmeldung', text: 'Hecht mit 78 cm auf Spinnerbait direkt an der zweiten Kante in ca. 5 Metern Tiefe gefangen. Wasser ist aktuell sehr klar!' },
+                    { author: 'Thomas Fradl (#1)', role: '1. Vorsitzender', date: 'Vor 1 Woche', spot: 'P1 – Schranke', category: 'Gewässer-Hinweis', text: 'Bitte denkt daran, die Zufahrtsschranke nach dem Ein- und Ausfahren immer direkt abzuschließen.' }
+                ]
+            },
+            mahlweiher: {
+                id: 'mahlweiher',
+                name: 'Mahlweiher',
+                subtitle: 'Aulendorf • Idyllischer Wald- und Wiesenweiher',
+                area: 'ca. 1,9 ha',
+                depth: 'bis ca. 2,8 m',
+                price: '18,00 € (Tageskarte für Mitglieder via hejfish)',
+                coords: '47.9510,9.6480',
+                bbox: '9.632%2C47.943%2C9.664%2C47.959',
+                fish: ['Karpfen', 'Schleie', 'Hecht', 'Aal', 'Flussbarsch', 'Rotauge'],
+                shore: 'Naturnahes Ufer mit Baumbestand und ruhigen Ansitzplätzen.',
+                parking: 'Parken ausschließlich auf den freigegebenen Stellflächen, Feld- und Waldwege freihalten.',
+                rules: 'Saison 01.03. – 31.10. • Ufervegetation schonen • Fangmeldungen unmittelbar über hejfish eintragen.',
+                description: 'Der Mahlweiher bei Aulendorf begeistert durch seine ruhige, naturnahe Lage. Besonders Ansitzangler auf Karpfen, Schleie und Aal sowie Spinnfischer auf Hecht schätzen dieses Gewässer.',
+                spots: [
+                    { code: 'M1', type: 'allowed', x: 35, y: 74, title: 'Dammseite / Mönch (Südufer)', depth: '2,8 m', ground: 'Fest, tiefste Stelle', tip: 'Bester Platz im Frühjahr und Herbst, wenn sich die Fische im tieferen Wasser vor dem Mönch sammeln.' },
+                    { code: 'M2', type: 'allowed', x: 70, y: 52, title: 'Waldufer Ost (Unter den Eichen)', depth: '1,9 m', ground: 'Laub / Naturboden', tip: 'Schattiger Sommerplatz – überhängende Äste bringen regelmäßig Aale und Karpfen.' },
+                    { code: 'S1', type: 'restricted', x: 25, y: 30, title: 'SPERRZONE: Flachwasser-Einlauf Nordwest', depth: '0,6 m', ground: 'Verlandungszone / Schilf', tip: 'Schongebiet für Amphibien und Laichfische – Angeln verboten.' }
+                ],
+                defaultComments: [
+                    { author: 'Sven Schwer (#25)', role: 'Jugendwart', date: 'Vor 5 Tagen', spot: 'M1 – Dammseite', category: 'Angelplatz-Tipp', text: 'Mit der Pose ganz dicht am Uferkraut beißen die Schleien momentan hervorragend auf Mais/Dendrobena-Kombi.' }
+                ]
+            },
+            wannenberger: {
+                id: 'wannenberger',
+                name: 'Wannenberger Weiher',
+                subtitle: 'Aulendorf-Wannenberg • Ruhiges Naturgewässer',
+                area: 'ca. 1,5 ha',
+                depth: 'bis ca. 2,5 m',
+                price: '18,00 € (Tageskarte für Mitglieder via hejfish)',
+                coords: '47.9685,9.6285',
+                bbox: '9.612%2C47.960%2C9.645%2C47.977',
+                fish: ['Karpfen', 'Schleie', 'Hecht', 'Aal', 'Karausche', 'Flussbarsch'],
+                shore: 'Sanft abfallendes Naturufer mit Schilfgürtel und Unterwasserpflanzen.',
+                parking: 'Ausgewiesene Parkmöglichkeit im Bereich Wannenberg beachten.',
+                rules: 'Saison 01.03. – 31.10. • Exklusiv für Vereinsmitglieder mit gültiger Karte.',
+                description: 'Ein herrlich gelegenes Kleingewässer mit sehr gutem Bestand an Schleien, Karpfen und Hechten – ideal für erholsame Angelstunden inmitten der Natur.',
+                spots: [
+                    { code: 'W1', type: 'allowed', x: 42, y: 73, title: 'Wiesenplatz Südseite', depth: '2,3 m', ground: 'Weicher Lehmgrund', tip: 'Bequemer Ansitzplatz mit viel Rückraum zum Auswerfen.' },
+                    { code: 'W2', type: 'allowed', x: 66, y: 35, title: 'Seerosen-Lücke Nordost', depth: '1,7 m', ground: 'Krautkante', tip: 'Geheimtipp mit leichter Posenmontage auf Karausche und Schleie.' },
+                    { code: 'S1', type: 'restricted', x: 20, y: 48, title: 'SPERRZONE: Schilfgürtel West', depth: '0,9 m', ground: 'Schilf', tip: 'Naturschutzzone – bitte nicht betreten.' }
+                ],
+                defaultComments: [
+                    { author: 'Michael Schoch (#2)', role: 'Gewässerwart', date: 'Vor 1 Woche', spot: 'W2 – Seerosen-Lücke', category: 'Gewässer-Hinweis', text: 'Im Sommer bitte kräftigere Schnur (mind. 0,28 mm) wählen, da die Seerosenfelder stark gewachsen sind.' }
+                ]
+            },
+            neuhauser: {
+                id: 'neuhauser',
+                name: 'Neuhauser Weiher',
+                subtitle: 'Raum Aulendorf-Neuhausen • Naturnaher Weiher',
+                area: 'ca. 1,4 ha',
+                depth: 'bis ca. 2,6 m',
+                price: '18,00 € (Tageskarte für Mitglieder via hejfish)',
+                coords: '47.9430,9.6190',
+                bbox: '9.602%2C47.935%2C9.635%2C47.951',
+                fish: ['Karpfen', 'Schleie', 'Zander', 'Hecht', 'Aal', 'Flussbarsch', 'Weißfische'],
+                shore: 'Gepflegtes Ufer mit natürlichen Unterständen für Raub- und Friedfische.',
+                parking: 'Zufahrtswege der Landwirte stets freihalten.',
+                rules: 'Saison 01.03. – 31.10. • Schonzeiten und Mindestmaße gemäß Gewässerordnung beachten.',
+                description: 'Der Neuhauser Weiher rundet unsere fünf Vereinsgewässer ab und bietet einen ausgewogenen Mischbesatz vom Friedfisch bis zum Zander und Hecht.',
+                spots: [
+                    { code: 'N1', type: 'allowed', x: 52, y: 74, title: 'Hauptdamm Süd', depth: '2,6 m', ground: 'Fest / steinig', tip: 'Top-Platz für Grundangeln auf Zander und Aal in der Dämmerung.' },
+                    { code: 'N2', type: 'allowed', x: 30, y: 34, title: 'Nordwest-Ecke am Gehölz', depth: '1,8 m', ground: 'Naturgrund', tip: 'Sehr guter Standplatz für Hechte unter den überhängenden Sträuchern.' },
+                    { code: 'S1', type: 'restricted', x: 78, y: 46, title: 'SPERRZONE: Flachufer Ost', depth: '0,7 m', ground: 'Röhricht', tip: 'Schongebiet – Betreten verboten.' }
+                ],
+                defaultComments: [
+                    { author: 'Max Mustermann (#10)', role: 'Aktives Mitglied', date: 'Vor 3 Tagen', spot: 'N1 – Hauptdamm Süd', category: 'Fangmeldung', text: 'Schöner Spiegelkarpfen (8,5 kg) auf Boilie am Hauptdamm gelandet. Bitte landwirtschaftliche Zufahrt beim Parken komplett freilassen!' }
+                ]
+            }
+        };
+
+        let currentOpenLakeId = null;
+
+        // Rendert die 5 anklickbaren Gewässerkarten
+        function renderLakesGrid() {
+            const grid = document.getElementById('lakes-grid');
+            if (!grid) return;
+            const user = getLoggedInMember();
+            grid.innerHTML = Object.values(LAKES_DATA).map((lake, idx) => `
+                <div onclick="openLakeDetail('${lake.id}')" class="cursor-pointer group p-5 rounded-2xl border border-forest-200/80 bg-gradient-to-r from-white via-forest-50/30 to-lake-50/40 hover:border-forest-600 hover:shadow-md transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="space-y-2">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-md bg-forest-700 text-white text-xs font-bold">Gewässer #${idx + 1}</span>
+                            <span class="text-xs font-semibold text-lake-700">${lake.subtitle}</span>
+                            ${user ? `<span class="text-[11px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">🔓 ${lake.spots.length} Insider-Punkte freigeschaltet</span>` : `<span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-semibold">🔒 Angelplätze nach Login</span>`}
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-serif font-bold text-slate-900 group-hover:text-forest-700 transition flex items-center gap-2">
+                            <span>${lake.name}</span>
+                            <i data-lucide="external-link" class="w-4 h-4 text-forest-600 opacity-75 group-hover:translate-x-0.5 transition"></i>
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 line-clamp-2">${lake.description}</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="text-xs bg-emerald-100 text-emerald-900 font-semibold px-2.5 py-0.5 rounded-md">Fläche: ${lake.area}</span>
+                            <span class="text-xs bg-lake-100 text-lake-900 font-semibold px-2.5 py-0.5 rounded-md">Tiefe: ${lake.depth}</span>
+                            ${lake.fish.slice(0, 5).map(f => `<span class="text-xs bg-white border border-slate-200 px-2 py-0.5 rounded-md text-slate-700">${f}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="flex sm:flex-col items-end justify-between gap-2 shrink-0">
+                        <span class="px-3.5 py-2 rounded-xl bg-forest-600 group-hover:bg-forest-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                            <span>Details, Angelplätze & Route</span>
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Liest gespeicherte + Standard-Kommentare zu einem Gewässer
+        function getLakeComments(lakeId) {
+            const lake = LAKES_DATA[lakeId];
+            if (!lake) return [];
+            try {
+                const custom = JSON.parse(localStorage.getItem('fnv_lake_comments_' + lakeId));
+                if (Array.isArray(custom) && custom.length > 0) {
+                    return [...custom, ...lake.defaultComments];
+                }
+            } catch (e) {}
+            return lake.defaultComments;
+        }
+
+        // Öffnet die Detailansicht eines einzelnen Weihers inkl. Mitglieder-Cockpit (Angelplätze & Kommentare)
+        function openLakeDetail(lakeId) {
+            const lake = LAKES_DATA[lakeId];
+            if (!lake) return;
+            currentOpenLakeId = lakeId;
+            const container = document.getElementById('lake-detail-container');
+            const [lat, lng] = lake.coords.split(',');
+            const user = getLoggedInMember();
+            const comments = getLakeComments(lakeId);
+
+            // Mitglieder-Bereich: Entweder gesperrte Box oder interaktive Angelplatz-Karte + Kommentare
+            let memberExclusiveHtml = '';
+            if (!user) {
+                memberExclusiveHtml = `
+                    <div class="rounded-2xl border-2 border-dashed border-lake-400 bg-gradient-to-br from-lake-50 via-white to-forest-50 p-6 sm:p-8 text-center space-y-4 shadow-sm">
+                        <div class="w-14 h-14 rounded-2xl bg-lake-600 text-white flex items-center justify-center mx-auto shadow-md">
+                            <i data-lucide="lock" class="w-7 h-7"></i>
+                        </div>
+                        <div class="max-w-xl mx-auto space-y-1.5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-lake-700">Exklusiver Mitglieder-Bereich</span>
+                            <h3 class="text-xl font-serif font-bold text-slate-900">Genaue Angelplätze, Sperrzonen & Mitglieder-Kommentare zum ${lake.name}</h3>
+                            <p class="text-xs sm:text-sm text-slate-600">
+                                Wo darf genau geangelt werden? Wo liegen die tiefsten Kanten, Schranken-Parkplätze und Schongebiete? Und was haben Vereinskollegen zuletzt am ${lake.name} gefangen? Melde dich mit deiner Mitgliedsnummer an!
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+                            <button onclick="openLoginModal()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-forest-600 to-lake-600 hover:from-forest-700 hover:to-lake-700 text-white text-xs sm:text-sm font-bold flex items-center gap-2 shadow-md transition">
+                                <i data-lucide="key-round" class="w-4 h-4"></i>
+                                <span>Mitglieder-Login öffnen (Test: Nr. 1 / Passwort: abc)</span>
+                            </button>
+                            <button onclick="quickDemoLogin('${lake.id}')" class="px-4 py-3 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-950 text-xs sm:text-sm font-bold flex items-center gap-1.5 border border-emerald-300 transition">
+                                <i data-lucide="zap" class="w-4 h-4 text-emerald-700"></i>
+                                <span>Direkt mit Test-Account (1 / abc) freischalten</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                memberExclusiveHtml = `
+                    <!-- FREIGESCHALTETES MITGLIEDER-COCKPIT -->
+                    <div class="rounded-2xl border-2 border-emerald-500 bg-gradient-to-br from-emerald-50/70 via-white to-lake-50/60 p-6 sm:p-7 space-y-6 shadow-md">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-200 pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                                    <i data-lucide="unlock" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Mitglieder-Insiderbereich freigeschaltet für ${user.name} (#${user.memberNo})</span>
+                                    <h3 class="text-xl font-serif font-bold text-slate-900">Erlaubte Angelplätze, Sperrzonen & Gewässer-Punkte: ${lake.name}</h3>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-full border border-emerald-300">
+                                Klicke auf einen Punkt in der Karte
+                            </span>
+                        </div>
+
+                        <!-- Interaktive Angelplatz-Zonenkarte (SVG) -->
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 items-start">
+                            <div class="lg:col-span-3 relative rounded-2xl overflow-hidden border-2 border-forest-300 bg-[#d9eadf] shadow-inner">
+                                <svg viewBox="0 0 100 100" class="w-full h-64 sm:h-72 block">
+                                    <!-- Ufer/Wiese/Wald Hintergrund -->
+                                    <rect width="100" height="100" fill="#d8ebd9"/>
+                                    <!-- Wald-Bäume angedeutet -->
+                                    <circle cx="12" cy="15" r="7" fill="#8ab896" opacity="0.6"/>
+                                    <circle cx="25" cy="10" r="6" fill="#8ab896" opacity="0.6"/>
+                                    <circle cx="85" cy="18" r="8" fill="#8ab896" opacity="0.6"/>
+                                    <circle cx="90" cy="82" r="7" fill="#8ab896" opacity="0.6"/>
+
+                                    <!-- Wasserfläche des Weihers -->
+                                    <path d="M 16,48 C 14,26 36,18 58,20 C 78,22 86,36 83,56 C 80,74 62,79 40,77 C 22,75 18,64 16,48 Z" fill="#0369a1" stroke="#0c4a6e" stroke-width="1.5"/>
+                                    <!-- Tiefenlinie innen -->
+                                    <path d="M 28,49 C 27,35 42,29 56,31 C 69,33 74,43 71,56 C 68,66 55,69 41,67 C 31,65 29,58 28,49 Z" fill="#0284c7" opacity="0.65" stroke="#7dd3fc" stroke-dasharray="2,2" stroke-width="0.6"/>
+
+                                    <!-- Rote Sperrzone Schilfgürtel markiert -->
+                                    <path d="M 15,36 Q 22,30 28,38 Q 25,55 17,60 Z" fill="#ef4444" opacity="0.45" stroke="#b91c1c" stroke-width="0.8"/>
+
+                                    <!-- Interaktive Pins für Angelplätze, Sperrzonen & Parkplatz -->
+                                    ${lake.spots.map((s, idx) => {
+                                        const fill = s.type === 'allowed' ? '#10b981' : (s.type === 'restricted' ? '#ef4444' : '#0284c7');
+                                        return `
+                                            <g onclick="selectLakeSpot('${lake.id}', ${idx})" class="cursor-pointer hover:opacity-90">
+                                                <circle cx="${s.x}" cy="${s.y}" r="6.2" fill="${fill}" stroke="#ffffff" stroke-width="1.4"/>
+                                                <text x="${s.x}" y="${s.y + 1.8}" text-anchor="middle" fill="#ffffff" font-size="4.6" font-weight="bold" font-family="Inter, sans-serif">${s.code}</text>
+                                            </g>
+                                        `;
+                                    }).join('')}
+                                </svg>
+
+                                <!-- Legende unter der Zonenkarte -->
+                                <div class="bg-slate-900/90 text-white px-3.5 py-2 text-[11px] flex flex-wrap items-center justify-between gap-2">
+                                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> Erlaubter Angelplatz</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span> Sperr-/Schonzone (Verbot!)</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500 inline-block"></span> Parkplatz / Schranke</span>
+                                </div>
+                            </div>
+
+                            <!-- Detail-Infobox zum angeklickten Punkt -->
+                            <div class="lg:col-span-2 space-y-3">
+                                <div id="selected-spot-detail" class="p-4 rounded-2xl bg-white border-2 border-emerald-500 shadow-sm space-y-2">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md inline-block">Punkt ${lake.spots[0].code} ausgewählt</span>
+                                    <h4 class="font-bold text-slate-900 text-base">${lake.spots[0].title}</h4>
+                                    <div class="text-xs text-slate-600 space-y-1">
+                                        <p><strong>Wassertiefe:</strong> ${lake.spots[0].depth}</p>
+                                        <p><strong>Grund & Struktur:</strong> ${lake.spots[0].ground}</p>
+                                        <p class="text-slate-800 bg-slate-50 p-2.5 rounded-xl border border-slate-200 mt-1"><strong>Vereins-Info:</strong> ${lake.spots[0].tip}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Liste aller Punkte zum schnellen Anklicken -->
+                                <div class="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                                    ${lake.spots.map((s, idx) => {
+                                        const badgeClass = s.type === 'allowed'
+                                            ? 'bg-emerald-600 text-white'
+                                            : (s.type === 'restricted' ? 'bg-red-600 text-white' : 'bg-sky-600 text-white');
+                                        return `
+                                            <button type="button" onclick="selectLakeSpot('${lake.id}', ${idx})" class="w-full text-left p-2.5 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 flex items-center gap-2.5 text-xs transition">
+                                                <span class="w-7 h-7 rounded-lg ${badgeClass} font-bold flex items-center justify-center shrink-0">${s.code}</span>
+                                                <div class="truncate">
+                                                    <span class="font-bold text-slate-900 block truncate">${s.title}</span>
+                                                    <span class="text-[11px] text-slate-500">Tiefe: ${s.depth}</span>
+                                                </div>
+                                            </button>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MITGLIEDER-KOMMENTARE, FANGMELDUNGEN & AUSTAUSCH UNTER DEN GEWÄSSER-INFOS -->
+                        <div class="pt-5 border-t border-emerald-200 space-y-4">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-lake-700">Internes Vereins-Board</span>
+                                    <h4 class="text-lg font-serif font-bold text-slate-900">Kommentare, Tipps & Fangmeldungen unserer Mitglieder (${comments.length})</h4>
+                                </div>
+                                <span class="text-xs text-slate-500">Sichtbar nur für eingeloggte Vereinsmitglieder</span>
+                            </div>
+
+                            <!-- Kommentar-Liste -->
+                            <div id="lake-comments-list" class="space-y-3">
+                                ${comments.map(c => `
+                                    <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1.5">
+                                        <div class="flex flex-wrap items-center justify-between gap-2">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-bold text-slate-900 text-xs sm:text-sm">${c.author}</span>
+                                                <span class="text-[11px] bg-forest-50 text-forest-800 border border-forest-200 px-2 py-0.5 rounded-md font-semibold">${c.category}</span>
+                                                ${c.spot ? `<span class="text-[11px] bg-lake-50 text-lake-800 px-2 py-0.5 rounded-md font-medium">📍 ${c.spot}</span>` : ''}
+                                            </div>
+                                            <span class="text-[11px] text-slate-400">${c.date}</span>
+                                        </div>
+                                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${c.text}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Formular: Neuen Kommentar als eingeloggtes Mitglied schreiben -->
+                            <form onsubmit="addLakeComment(event, '${lake.id}')" class="bg-white p-4 rounded-2xl border border-emerald-300 space-y-3">
+                                <h5 class="text-xs font-bold uppercase tracking-wider text-forest-800 flex items-center gap-1.5">
+                                    <i data-lucide="message-square-plus" class="w-4 h-4 text-forest-600"></i>
+                                    Neuen Kommentar / Gewässer-Hinweis als ${user.name} (#${user.memberNo}) hinterlassen
+                                </h5>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Betreffender Angelplatz / Bereich</label>
+                                        <select id="comment-spot-${lake.id}" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-slate-50">
+                                            <option value="Allgemein am Gewässer">Allgemein am Gewässer</option>
+                                            ${lake.spots.map(s => `<option value="${s.code} – ${s.title}">${s.code} – ${s.title}</option>`).join('')}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Art des Beitrags</label>
+                                        <select id="comment-cat-${lake.id}" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-slate-50">
+                                            <option value="Angelplatz-Tipp">🎣 Angelplatz-Tipp & Köder</option>
+                                            <option value="Fangmeldung">🐟 Aktuelle Fangmeldung</option>
+                                            <option value="Gewässer-Hinweis">🌿 Gewässer-Hinweis (Kraut / Wasserstand)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <textarea id="comment-text-${lake.id}" rows="2" required placeholder="Teile deine Erfahrungen zu Angelplätzen, Krautstand, Ködern oder aktuellen Fängen mit deinen Vereinskollegen..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-forest-600"></textarea>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button type="submit" class="px-4 py-2 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs font-bold flex items-center gap-1.5 shadow transition">
+                                        <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                                        <span>Kommentar unter ${lake.name} veröffentlichen</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                        <button onclick="switchTab('gewaesser')" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-forest-700 hover:text-forest-900 bg-forest-50 hover:bg-forest-100 px-3.5 py-2 rounded-xl transition">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span>Zurück zu allen 5 Vereinsgewässern</span>
+                        </button>
+                        <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">${lake.price}</span>
+                    </div>
+
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-lake-600">${lake.subtitle}</span>
+                        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">${lake.name}</h2>
+                        <p class="text-slate-700 text-sm sm:text-base leading-relaxed mt-3">${lake.description}</p>
+                    </div>
+
+                    <!-- Steckbrief-Karten -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                        <div class="p-4 rounded-xl bg-forest-50 border border-forest-100">
+                            <span class="text-xs text-forest-700 font-semibold block">Wasserfläche</span>
+                            <span class="text-lg font-extrabold text-forest-900">${lake.area}</span>
+                        </div>
+                        <div class="p-4 rounded-xl bg-lake-50 border border-lake-100">
+                            <span class="text-xs text-lake-700 font-semibold block">Maximale Tiefe</span>
+                            <span class="text-lg font-extrabold text-lake-900">${lake.depth}</span>
+                        </div>
+                        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-100">
+                            <span class="text-xs text-emerald-700 font-semibold block">Angelsaison</span>
+                            <span class="text-lg font-extrabold text-emerald-900">01.03. – 31.10.</span>
+                        </div>
+                    </div>
+
+                    <!-- Fischbestand -->
+                    <div>
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 mb-2.5 flex items-center gap-2">
+                            <i data-lucide="fish" class="w-4 h-4 text-forest-600"></i> Hauptfischarten im ${lake.name}
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${lake.fish.map(f => `<span class="px-3 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs sm:text-sm font-semibold border border-slate-200">${f}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Ufer, Parken & Bestimmungen -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="compass" class="w-4 h-4 text-forest-600"></i> Ufer & Parkmöglichkeiten</h4>
+                            <p class="text-xs sm:text-sm text-slate-600">${lake.shore} ${lake.parking}</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="shield-alert" class="w-4 h-4 text-lake-600"></i> Wichtige Bestimmungen</h4>
+                            <p class="text-xs sm:text-sm text-slate-600">${lake.rules}</p>
+                        </div>
+                    </div>
+
+                    <!-- NEU: Exklusiver Mitglieder-Bereich (Angelplätze, Sperrzonen & Kommentare) -->
+                    ${memberExclusiveHtml}
+
+                    <!-- Eingebettete Karte & Google Maps Routenbuttons -->
+                    <div class="space-y-3">
+                        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="map" class="w-5 h-5 text-lake-600"></i>
+                            <span>Lagekarte & direkte GPS-Anfahrt vom aktuellen Standort</span>
+                        </h3>
+                        <div class="rounded-2xl overflow-hidden border-2 border-forest-200 h-64 bg-slate-100 shadow-inner">
+                            <iframe title="Karte ${lake.name}" class="w-full h-full border-0" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${lake.bbox}&layer=mapnik&marker=${lat}%2C${lng}"></iframe>
+                        </div>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=${lake.coords}&travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs sm:text-sm font-bold shadow transition">
+                                <i data-lucide="navigation" class="w-4 h-4"></i>
+                                <span>Anfahrt zum ${lake.name} (vom aktuellen Standort)</span>
+                            </a>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=Haslach+3,+88326+Aulendorf&travelmode=driving" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-lake-600 hover:bg-lake-700 text-white text-xs sm:text-sm font-bold shadow transition">
+                                <i data-lucide="home" class="w-4 h-4"></i>
+                                <span>Route zum Fischerheim Haslach (Schlüssel & Verein)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-gewaesser-detail').classList.add('active');
+            lucide.createIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Auswahl eines Angelplatz-Pins auf der Gewässerkarte
+        function selectLakeSpot(lakeId, spotIdx) {
+            const lake = LAKES_DATA[lakeId];
+            if (!lake || !lake.spots[spotIdx]) return;
+            const s = lake.spots[spotIdx];
+            const box = document.getElementById('selected-spot-detail');
+            if (!box) return;
+            const borderColor = s.type === 'allowed' ? 'border-emerald-500' : (s.type === 'restricted' ? 'border-red-500' : 'border-sky-500');
+            const badgeColor = s.type === 'allowed' ? 'text-emerald-700 bg-emerald-50' : (s.type === 'restricted' ? 'text-red-700 bg-red-50' : 'text-sky-700 bg-sky-50');
+            box.className = `p-4 rounded-2xl bg-white border-2 ${borderColor} shadow-sm space-y-2`;
+            box.innerHTML = `
+                <span class="text-[11px] font-bold uppercase tracking-wider ${badgeColor} px-2.5 py-0.5 rounded-md inline-block">Punkt ${s.code} ausgewählt</span>
+                <h4 class="font-bold text-slate-900 text-base">${s.title}</h4>
+                <div class="text-xs text-slate-600 space-y-1">
+                    <p><strong>Wassertiefe:</strong> ${s.depth}</p>
+                    <p><strong>Grund & Struktur:</strong> ${s.ground}</p>
+                    <p class="text-slate-800 bg-slate-50 p-2.5 rounded-xl border border-slate-200 mt-1"><strong>Vereins-Info:</strong> ${s.tip}</p>
+                </div>
+            `;
+        }
+
+        // Neuen Mitglieder-Kommentar unter einem Gewässer speichern
+        function addLakeComment(e, lakeId) {
+            e.preventDefault();
+            const user = getLoggedInMember();
+            if (!user) {
+                openLoginModal();
+                return;
+            }
+            const spot = document.getElementById('comment-spot-' + lakeId).value;
+            const category = document.getElementById('comment-cat-' + lakeId).value;
+            const textEl = document.getElementById('comment-text-' + lakeId);
+            const text = textEl.value.trim();
+            if (!text) return;
+
+            let stored = [];
+            try {
+                stored = JSON.parse(localStorage.getItem('fnv_lake_comments_' + lakeId)) || [];
+            } catch (err) {}
+
+            stored.unshift({
+                author: `${user.name} (#${user.memberNo})`,
+                role: user.role,
+                date: 'Gerade eben',
+                spot: spot,
+                category: category,
+                text: text
+            });
+
+            try {
+                localStorage.setItem('fnv_lake_comments_' + lakeId, JSON.stringify(stored));
+            } catch (err) {}
+
+            openLakeDetail(lakeId);
+            showNotice('Dein Kommentar wurde unter dem Gewässer veröffentlicht!');
+        }
+
+        // =====================================================
+        // 1b. MITGLIEDER-LOGIN, LOGOUT & VERWALTUNG DER MITGLIEDSNUMMERN
+        // =====================================================
+        function openLoginModal() {
+            document.getElementById('login-error-msg').classList.add('hidden');
+            document.getElementById('login-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.add('hidden');
+        }
+
+        function fillDemoLogin() {
+            document.getElementById('login-member-no').value = '1';
+            document.getElementById('login-member-pass').value = 'abc';
+        }
+
+        function quickDemoLogin(lakeIdToReopen) {
+            const db = getMembersDB();
+            const demoUser = db.find(m => m.memberNo === '1') || { memberNo: '1', name: 'Thomas Fradl', role: '1. Vorsitzender (Admin)' };
+            localStorage.setItem('fnv_logged_in_member', JSON.stringify(demoUser));
+            updateAuthUI();
+            renderLakesGrid();
+            if (lakeIdToReopen) openLakeDetail(lakeIdToReopen);
+            showNotice(`Angemeldet als ${demoUser.name} (Mitglieds-Nr. #${demoUser.memberNo})!`);
+        }
+
+        function handleMemberLogin(e) {
+            e.preventDefault();
+            const no = document.getElementById('login-member-no').value.trim();
+            const pass = document.getElementById('login-member-pass').value.trim();
+            const db = getMembersDB();
+            const found = db.find(m => String(m.memberNo).toLowerCase() === no.toLowerCase() && m.password === pass);
+
+            const errBox = document.getElementById('login-error-msg');
+            if (!found) {
+                errBox.textContent = 'Ungültige Mitgliedsnummer oder falsches Passwort! Tipp: Nutze zum Testen Mitgliedsnummer 1 und Passwort abc.';
+                errBox.classList.remove('hidden');
+                return;
+            }
+
+            errBox.classList.add('hidden');
+            localStorage.setItem('fnv_logged_in_member', JSON.stringify(found));
+            closeLoginModal();
+            updateAuthUI();
+            renderLakesGrid();
+            if (currentOpenLakeId && document.getElementById('tab-gewaesser-detail').classList.contains('active')) {
+                openLakeDetail(currentOpenLakeId);
+            }
+            showNotice(`Willkommen, ${found.name} (Mitglieds-Nr. #${found.memberNo})! Alle Gewässer-Details sind jetzt freigeschaltet.`);
+        }
+
+        function logoutMember() {
+            localStorage.removeItem('fnv_logged_in_member');
+            updateAuthUI();
+            renderLakesGrid();
+            if (currentOpenLakeId && document.getElementById('tab-gewaesser-detail').classList.contains('active')) {
+                openLakeDetail(currentOpenLakeId);
+            }
+            showNotice('Du wurdest erfolgreich abgemeldet.');
+        }
+
+        function updateAuthUI() {
+            const user = getLoggedInMember();
+            const headerArea = document.getElementById('header-auth-area');
+            const sidebarWidget = document.getElementById('sidebar-member-widget');
+
+            if (headerArea) {
+                if (user) {
+                    headerArea.innerHTML = `
+                        <span class="bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 px-3 py-1 rounded-full font-semibold flex items-center gap-1.5">
+                            <i data-lucide="user-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                            <span>#${user.memberNo} (${user.name})</span>
+                        </span>
+                        <button onclick="logoutMember()" class="bg-white/10 hover:bg-red-500/30 text-white px-2.5 py-1 rounded-full text-xs font-medium transition">
+                            Abmelden
+                        </button>
+                    `;
+                } else {
+                    headerArea.innerHTML = `
+                        <button onclick="openLoginModal()" class="bg-lake-500 hover:bg-lake-400 text-white font-bold px-3.5 py-1 rounded-full shadow-sm transition flex items-center gap-1.5 border border-white/20">
+                            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                            <span>Mitglieder-Login</span>
+                        </button>
+                    `;
+                }
+            }
+
+            if (sidebarWidget) {
+                if (user) {
+                    sidebarWidget.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold uppercase tracking-wider bg-emerald-400 text-slate-950 px-2.5 py-0.5 rounded-md">🔓 Eingeloggt</span>
+                            <span class="text-xs text-emerald-200 font-mono">Mitglied #${user.memberNo}</span>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold">${user.name}</h3>
+                            <p class="text-xs text-emerald-100">${user.role} • Alle Angelplatz-Karten & Gewässer-Kommentare sind freigeschaltet.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <button onclick="switchTab('gewaesser')" class="py-2 px-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-bold transition">
+                                Angelplätze ansehen
+                            </button>
+                            <button onclick="switchTab('mitglieder-verwaltung')" class="py-2 px-3 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold transition">
+                                Logins verwalten
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    sidebarWidget.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold uppercase tracking-wider bg-white/15 text-emerald-200 px-2.5 py-0.5 rounded-md">🔒 Interner Bereich</span>
+                            <span class="text-xs text-lake-200">Test: 1 / abc</span>
+                        </div>
+                        <h3 class="text-base font-bold">Mitglieder-Login</h3>
+                        <p class="text-xs text-emerald-100 leading-relaxed">
+                            Schalte genaue Angelplätze, Sperrzonen und Mitglieder-Kommentare an allen 5 Weihern frei.
+                        </p>
+                        <div class="flex flex-col gap-2 pt-1">
+                            <button onclick="openLoginModal()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+                                <span>Mit Mitgliedsnummer anmelden</span>
+                            </button>
+                            <button onclick="switchTab('mitglieder-verwaltung')" class="w-full py-1.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-emerald-100 text-[11px] font-medium transition">
+                                Wo werden Mitgliedsnummern festgelegt?
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+            lucide.createIcons();
+        }
+
+        // Rendert die Vorstands-Verwaltungstabelle aller freigeschalteten Mitgliedsnummern
+        function renderAdminMembersTable() {
+            const tbody = document.getElementById('admin-members-table-body');
+            if (!tbody) return;
+            const list = getMembersDB();
+            tbody.innerHTML = list.map(m => `
+                <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-4 font-mono font-bold text-forest-800">#${m.memberNo}</td>
+                    <td class="py-3 px-4 font-semibold text-slate-900">${m.name}</td>
+                    <td class="py-3 px-4"><span class="px-2.5 py-0.5 rounded-full text-xs bg-lake-50 text-lake-800 border border-lake-200">${m.role}</span></td>
+                    <td class="py-3 px-4 font-mono text-slate-700"><span class="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">${m.password}</span></td>
+                    <td class="py-3 px-4 text-right space-x-1.5">
+                        <button onclick="loginDirectlyAs('${m.memberNo}')" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">
+                            Als #${m.memberNo} testen
+                        </button>
+                        <button onclick="deleteMemberAccount('${m.memberNo}')" class="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 text-xs font-semibold">
+                            Löschen
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function addOrUpdateMemberAccount(e) {
+            e.preventDefault();
+            const no = document.getElementById('admin-mem-no').value.trim();
+            const name = document.getElementById('admin-mem-name').value.trim();
+            const pass = document.getElementById('admin-mem-pass').value.trim();
+            const role = document.getElementById('admin-mem-role').value;
+            if (!no || !name || !pass) return;
+
+            const list = getMembersDB();
+            const existingIdx = list.findIndex(m => String(m.memberNo).toLowerCase() === no.toLowerCase());
+            if (existingIdx >= 0) {
+                list[existingIdx] = { memberNo: no, password: pass, name: name, role: role };
+            } else {
+                list.push({ memberNo: no, password: pass, name: name, role: role });
+            }
+            saveMembersDB(list);
+            renderAdminMembersTable();
+            document.getElementById('admin-mem-no').value = '';
+            document.getElementById('admin-mem-name').value = '';
+            document.getElementById('admin-mem-pass').value = '';
+            showNotice(`Mitgliedsnummer #${no} (${name}) ist ab sofort mit Passwort "${pass}" freigeschaltet!`);
+        }
+
+        function deleteMemberAccount(memberNo) {
+            let list = getMembersDB();
+            if (list.length <= 1) {
+                showNotice('Mindestens ein Test-Zugang muss in der Liste bleiben.');
+                return;
+            }
+            list = list.filter(m => String(m.memberNo) !== String(memberNo));
+            saveMembersDB(list);
+            renderAdminMembersTable();
+            showNotice(`Mitgliedsnummer #${memberNo} wurde aus der Zugangsliste entfernt.`);
+        }
+
+        function loginDirectlyAs(memberNo) {
+            const list = getMembersDB();
+            const found = list.find(m => String(m.memberNo) === String(memberNo));
+            if (!found) return;
+            localStorage.setItem('fnv_logged_in_member', JSON.stringify(found));
+            updateAuthUI();
+            renderLakesGrid();
+            openLakeDetail('haslacher');
+            showNotice(`Du bist jetzt als ${found.name} (#${found.memberNo}) eingeloggt – hier ist die Insider-Ansicht vom Haslacher Weiher!`);
+        }
+
+        function copyMembersDbCode() {
+            const list = getMembersDB();
+            const codeString = `const DEFAULT_MEMBERS_DB = ${JSON.stringify(list, null, 4)};`;
+            const temp = document.createElement('textarea');
+            temp.value = codeString;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showNotice('JavaScript-Code der Mitgliederliste in die Zwischenablage kopiert!');
+        }
+
+        // =====================================================
+        // 1c. FISCHERPRÜFUNG: ANMELDEFORMULAR-LOGIK
+        // =====================================================
+        function toggleMinorFields(categoryValue) {
+            const box = document.getElementById('fp-minor-box');
+            if (!box) return;
+            if (categoryValue.includes('Jugendliche')) {
+                box.classList.remove('hidden');
+            } else {
+                box.classList.add('hidden');
+            }
+        }
+
+        function submitExamRegistration(e) {
+            e.preventDefault();
+            const course = document.getElementById('fp-course').value;
+            const category = document.getElementById('fp-category').value;
+            const firstName = document.getElementById('fp-firstname').value;
+            const lastName = document.getElementById('fp-lastname').value;
+            const dob = document.getElementById('fp-dob').value;
+            const birthplace = document.getElementById('fp-birthplace').value;
+            const nationality = document.getElementById('fp-nationality').value;
+            const street = document.getElementById('fp-street').value;
+            const city = document.getElementById('fp-city').value;
+            const phone = document.getElementById('fp-phone').value;
+            const email = document.getElementById('fp-email').value;
+            const parentName = document.getElementById('fp-parent-name').value || '–';
+            const material = document.getElementById('fp-material').checked ? 'Ja, Prüfungsfragen-Übungsheft / Online-Zugang gewünscht' : 'Nein';
+            const clubInterest = document.getElementById('fp-club-interest').checked ? 'Ja, Interesse an Vereinsaufnahme im FNV Aulendorf' : 'Noch offen';
+            const notes = document.getElementById('fp-notes').value || 'Keine';
+
+            const confBox = document.getElementById('exam-registration-confirmation');
+            const mailSubject = encodeURIComponent(`Anmeldung Fischerprüfung FNV Aulendorf - ${firstName} ${lastName}`);
+            const mailBody = encodeURIComponent(
+                `Sehr geehrte Lehrgangsleitung des FNV Aulendorf e.V.,\n\n` +
+                `hiermit melde ich mich verbindlich zur Fischerprüfung / zum Vorbereitungslehrgang an:\n\n` +
+                `Gewählter Kurs: ${course}\n` +
+                `Kategorie: ${category}\n` +
+                `Name (laut Ausweis): ${firstName} ${lastName}\n` +
+                `Geburtsdatum: ${dob} | Geburtsort: ${birthplace} | Staatsangehörigkeit: ${nationality}\n` +
+                `Anschrift: ${street}, ${city}\n` +
+                `Telefon: ${phone} | E-Mail: ${email}\n` +
+                `Gesetzlicher Vertreter (falls unter 18): ${parentName}\n` +
+                `Lernmaterial: ${material}\n` +
+                `Vereinsinteresse: ${clubInterest}\n` +
+                `Bemerkungen: ${notes}\n\n` +
+                `Mit freundlichen Grüßen\n${firstName} ${lastName}`
+            );
+
+            confBox.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-200 pb-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Prüfungsanmeldung erfasst</span>
+                        <h4 class="text-lg font-serif font-bold text-slate-900">Anmeldebestätigung Fischerprüfung für ${firstName} ${lastName}</h4>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-emerald-200 text-emerald-950 text-xs font-bold">${category}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm bg-white p-4 rounded-xl border border-emerald-200">
+                    <p class="sm:col-span-2"><strong>Lehrgang:</strong> ${course}</p>
+                    <p><strong>Teilnehmer:</strong> ${firstName} ${lastName}</p>
+                    <p><strong>Geburtsdaten:</strong> ${dob} in ${birthplace}</p>
+                    <p><strong>Anschrift:</strong> ${street}, ${city}</p>
+                    <p><strong>Kontakt:</strong> ${phone} • ${email}</p>
+                    <p class="sm:col-span-2"><strong>Lernunterlagen:</strong> ${material}</p>
+                </div>
+                <div class="flex flex-wrap gap-3 pt-1 no-print">
+                    <a href="mailto:info@fnv-aulendorf.de?subject=${mailSubject}&body=${mailBody}" class="px-5 py-2.5 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs sm:text-sm font-bold flex items-center gap-2 shadow">
+                        <i data-lucide="send" class="w-4 h-4"></i> Anmeldung per E-Mail an Lehrgangsleitung senden
+                    </a>
+                    <button type="button" onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 text-xs sm:text-sm font-bold flex items-center gap-2">
+                        <i data-lucide="printer" class="w-4 h-4"></i> Anmeldebestätigung drucken / PDF
+                    </button>
+                </div>
+            `;
+            confBox.classList.remove('hidden');
+            lucide.createIcons();
+            showNotice('Deine Anmeldung zur Fischerprüfung wurde erfolgreich erstellt!');
+        }
+
+        // =====================================================
+        // 2. VORSTANDSCHAFT MIT PORTRÄTFOTOS & EIGENEM FOTO-UPLOAD
+// ... existing code ... -->
+        window.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            renderLakesGrid();
+            renderBoardMembers();
+            renderYouthGallery();
+            renderAdminMembersTable();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
