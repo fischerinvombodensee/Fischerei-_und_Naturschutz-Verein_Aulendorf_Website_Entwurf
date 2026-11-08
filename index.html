@@ -340,7 +340,147 @@
                 <!-- ==========================================
                      TAB 2b: GEWÄSSER DETAILANSICHT (MITGLIEDER-BEREICH)
                 =========================================== -->
-                <section id="tab-gewaesser-detail" class="tab-content space-y-6"></section>
+               <section id="tab-gewaesser-detail" class="tab-content space-y-6 active">
+                <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-6">
+                    <button onclick="switchTab('gewaesser')" class="inline-flex items-center gap-1.5 text-xs font-bold text-forest-700 hover:text-forest-900 bg-forest-50 px-3 py-1.5 rounded-lg transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-left" aria-hidden="true" class="lucide lucide-arrow-left w-4 h-4"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+                        <span>Zurück zur Übersicht aller 5 Gewässer</span>
+                    </button>
+
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="1. Haslacher Weiher &amp; Fischerheim" class="w-full md:w-1/2 h-64 object-cover rounded-2xl shadow">
+                        <div class="space-y-3 w-full md:w-1/2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-forest-700 bg-emerald-100 px-2.5 py-1 rounded-md inline-block">Vereinshauptsitz &amp; Hauptgewässer</span>
+                            <h2 class="text-2xl font-serif font-bold text-slate-900">1. Haslacher Weiher &amp; Fischerheim</h2>
+                            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">Der Haslacher Weiher direkt am vereinseigenen Fischerheim ist das Herzstück unseres Vereins. Gut zugängliche Uferbereiche und ein intakter Schilfgürtel bieten hervorragende Bedingungen.</p>
+                            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-50 p-3 rounded-xl border border-slate-200">
+                                <div><span class="text-slate-500 block">Fläche:</span> <strong class="text-slate-900">ca. 4,5 ha</strong></div>
+                                <div><span class="text-slate-500 block">Max. Tiefe:</span> <strong class="text-slate-900">max. 3,8 m</strong></div>
+                                <div class="col-span-2 pt-1 border-t border-slate-200"><span class="text-slate-500 block">Hauptfischarten:</span> <strong class="text-slate-900">Karpfen, Hecht, Zander, Schleie, Forelle, Weißfische</strong></div>
+                            </div>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="https://www.google.com/maps/place/Fischer-+und+Naturschutzverein+Aulendorf/@47.9644301,9.6793262,19z/data=!4m6!3m5!1s0x479bb7b396701b65:0xa469edadcaca7084!8m2!3d47.96443!4d9.6801!16s%2Fg%2F1tdrdbpn?entry=ttu" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-lake-600 hover:bg-lake-700 text-white text-xs font-bold flex items-center gap-1.5 shadow transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="navigation" aria-hidden="true" class="lucide lucide-navigation w-3.5 h-3.5"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                                    <span>Anfahrt vom aktuellen Standort</span>
+                                </a>
+                                <a href="https://www.google.com/maps/place/Fischer-+und+Naturschutzverein+Aulendorf/@47.9644301,9.6793262,19z/data=!4m6!3m5!1s0x479bb7b396701b65:0xa469edadcaca7084!8m2!3d47.96443!4d9.6801!16s%2Fg%2F1tdrdbpn?entry=ttu" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-forest-600 hover:bg-forest-700 text-white text-xs font-bold flex items-center gap-1.5 shadow transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="home" aria-hidden="true" class="lucide lucide-home w-3.5 h-3.5"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                                    <span>Route zum Fischerheim (Haslach 3)</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="bg-gradient-to-br from-emerald-50 via-forest-50 to-lake-50 rounded-2xl p-6 border-2 border-emerald-500/50 space-y-5 shadow-md">
+                        <div class="flex items-center justify-between border-b border-emerald-200 pb-3">
+                            <div class="flex items-center gap-2 text-emerald-900 font-bold text-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check" aria-hidden="true" class="lucide lucide-shield-check w-5 h-5 text-emerald-700"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                                <span>MITGLIEDER-INSIDERBEREICH FREIGESCHALTET FÜR THOMAS FRADL (#1)</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <h3 class="text-base font-serif font-bold text-slate-900">Erlaubte Angelplätze, Sperrzonen &amp; Gewässer-Punktekarte</h3>
+                            <p class="text-xs text-slate-600">Klicke unten auf einen Punkt, um genaue Detailinfos zu erhalten.</p>
+                            
+                            <!-- Die wiederhergestellte interaktive Karte -->
+                            <div class="relative bg-gradient-to-b from-forest-100 to-lake-100 rounded-2xl p-6 border border-emerald-300 shadow-inner flex flex-col items-center justify-center min-h-[260px]">
+                                <div class="w-72 h-44 rounded-full bg-gradient-to-br from-lake-600 to-forest-700 shadow-lg relative flex items-center justify-center border-4 border-white/60">
+                                    <div class="absolute inset-4 rounded-full border border-dashed border-white/40"></div>
+                                    <div class="absolute top-8 left-12 px-3 py-1 bg-emerald-600 text-white rounded-full text-xs font-bold shadow cursor-pointer hover:scale-105 transition" onclick="selectLakeSpot('A1')">A1</div>
+                                    <div class="absolute bottom-6 right-12 px-3 py-1 bg-emerald-600 text-white rounded-full text-xs font-bold shadow cursor-pointer hover:scale-105 transition" onclick="selectLakeSpot('A2')">A2</div>
+                                    <div class="absolute top-3 right-28 px-3 py-1 bg-emerald-600 text-white rounded-full text-xs font-bold shadow cursor-pointer hover:scale-105 transition" onclick="selectLakeSpot('A3')">A3</div>
+                                    <div class="absolute left-2 top-16 px-2.5 py-1 bg-red-600 text-white rounded-full text-[11px] font-bold shadow cursor-pointer hover:scale-105 transition" onclick="selectLakeSpot('S1')">S1 🚫</div>
+                                    <div class="absolute bottom-3 left-28 px-3 py-1 bg-lake-600 text-white rounded-full text-xs font-bold shadow cursor-pointer hover:scale-105 transition" onclick="selectLakeSpot('P1')">P1 🅿️</div>
+                                </div>
+                                <div class="flex flex-wrap items-center justify-center gap-4 mt-4 text-xs font-semibold text-slate-700 bg-white/80 backdrop-blur px-4 py-2 rounded-xl shadow-sm">
+                                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-600"></span> Erlaubter Angelplatz</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-600"></span> Sperr-/Schonzone (Verbot!)</span>
+                                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-lake-600"></span> Parkplatz / Schranke</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spot Selector / Detail Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            
+                    <div onclick="selectLakeSpot('A1')" class="cursor-pointer bg-white p-3.5 rounded-xl border-2 border-emerald-500 hover:shadow-md transition space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-600 text-white">A1: Südufer Steganlage</span>
+                            <span class="text-[11px] text-slate-500 font-medium">Tiefe: 2,4 m</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Gute Angelstelle für Friedfische und Karpfen. Parkplatz in unmittelbarer Nähe.</p>
+                    </div>
+                
+                    <div onclick="selectLakeSpot('A2')" class="cursor-pointer bg-white p-3.5 rounded-xl border-2 border-emerald-500 hover:shadow-md transition space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-600 text-white">A2: Ostufer Waldkante</span>
+                            <span class="text-[11px] text-slate-500 font-medium">Tiefe: 3,1 m</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Hotspot für Raubfische (Hecht und Zander).</p>
+                    </div>
+                
+                    <div onclick="selectLakeSpot('A3')" class="cursor-pointer bg-white p-3.5 rounded-xl border-2 border-emerald-500 hover:shadow-md transition space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-600 text-white">A3: Nordufer Seerosenfeld</span>
+                            <span class="text-[11px] text-slate-500 font-medium">Tiefe: 1,8 m</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Ausgezeichnet im Frühjahr für Schleien.</p>
+                    </div>
+                
+                    <div onclick="selectLakeSpot('S1')" class="cursor-pointer bg-white p-3.5 rounded-xl border-2 border-red-500 hover:shadow-md transition space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-red-600 text-white">S1: Schilf- &amp; Laichgebiet Westbucht</span>
+                            <span class="text-[11px] text-slate-500 font-medium">Tiefe: 0,8 - 1,4 m</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Ganzjähriges Angel- und Betretungsverbot zum Schutz der Fischbrut und Wasservögel!</p>
+                    </div>
+                
+                    <div onclick="selectLakeSpot('P1')" class="cursor-pointer bg-white p-3.5 rounded-xl border-2 border-lake-500 hover:shadow-md transition space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-lake-600 text-white">P1: Hauptparkplatz am Fischerheim</span>
+                            <span class="text-[11px] text-slate-500 font-medium">Tiefe: -</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Offizieller Parkplatz für Vereinsmitglieder (Haslach 3, 88326 Aulendorf).</p>
+                    </div>
+                
+                        </div>
+
+                        <!-- Mitglieder Kommentare Sektion -->
+                        <div class="space-y-3 pt-4 border-t border-emerald-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square w-4 h-4 text-forest-700"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path></svg>
+                                <span>Mitglieder-Kommentare &amp; Fangmeldungen zu 1. Haslacher Weiher &amp; Fischerheim</span>
+                            </h4>
+                            <div class="space-y-2.5">
+                                
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold text-slate-900">Markus Huber (#2)</span>
+                                <span class="text-slate-400">04.05.2026</span>
+                            </div>
+                            <p class="text-xs text-slate-700">Am Südufer geht zur Zeit auf Mais und Klee super was auf Karpfen!</p>
+                        </div>
+                    
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-bold text-slate-900">Thomas Fradl (#1)</span>
+                                <span class="text-slate-400">28.04.2026</span>
+                            </div>
+                            <p class="text-xs text-slate-700">Bitte beim Verlassen der Steganlage unbedingt das Tor zuziehen.</p>
+                        </div>
+                    
+                            </div>
+                            <form onsubmit="submitLakeComment(event, 'haslacher')" class="mt-3 flex gap-2">
+                                <input id="new-lake-comment" type="text" required="" placeholder="Tipp oder Fangmeldung schreiben..." class="flex-grow px-3.5 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+                                <button type="submit" class="px-4 py-2 rounded-xl bg-forest-600 hover:bg-forest-700 text-white font-bold text-xs shadow shrink-0">Absenden</button>
+                            </form>
+                        </div>
+                    </div>
+                
+                </div>
+            </section>
 
                 <!-- ==========================================
                      TAB 3: TAGESKARTEN & HEJFISH
