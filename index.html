@@ -345,24 +345,83 @@
                 <!-- ==========================================
                      TAB 3: TAGESKARTEN & HEJFISH
                 =========================================== -->
-                <section id="tab-tageskarten" class="tab-content space-y-6">
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-5">
-                        <div class="border-b border-slate-200 pb-4">
-                            <span class="text-xs font-bold uppercase tracking-wider text-lake-600">hejfish Online-System</span>
-                            <h2 class="text-2xl font-serif font-bold text-slate-900">Tageskarten für Vereinsmitglieder</h2>
-                        </div>
-                        <div class="bg-lake-50 border border-lake-200 rounded-2xl p-5 space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-900 text-base">Preis pro Tageskarte</span>
-                                <span class="text-2xl font-extrabold text-lake-700">18,00 €</span>
+                 <section id="tab-tageskarten" class="tab-content space-y-6">
+                    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-forest-100 space-y-6">
+                        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-5">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-forest-600">Digitale Ausgabestelle über hejfish</span>
+                                <h2 class="text-2xl font-serif font-bold text-slate-900">Tageskarten & Preise</h2>
                             </div>
-                            <p class="text-xs sm:text-sm text-slate-700">
-                                Gültig in der Angelsaison vom <strong>01.03. bis 31.10.</strong> für alle 5 Vereinsgewässer des FNV Aulendorf e.V. (Ausgabe ausschließlich an Vereinsmitglieder).
+                            <div class="bg-gradient-to-br from-forest-50 to-lake-50 border border-forest-200 rounded-2xl px-5 py-3 text-right">
+                                <span class="block text-xs text-forest-800 font-semibold">Tageskarte (alle 5 Gewässer)</span>
+                                <span class="text-3xl font-extrabold text-forest-700">18,00 €</span>
+                                <span class="block text-[11px] text-slate-500">zzgl. hejfish-Systemgebühren</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl text-sm text-amber-950 space-y-1">
+                            <p class="font-bold flex items-center gap-2">
+                                <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600 shrink-0"></i>
+                                Bezugsberechtigung (Exklusiv für Vereinsmitglieder):
                             </p>
-                            <a href="https://www.hejfish.com/m/fischer-und-naturschutzverein-aulendorf-e-v-1980" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-lake-600 hover:bg-lake-700 text-white font-bold text-xs sm:text-sm shadow transition">
-                                <i data-lucide="external-link" class="w-4 h-4"></i>
-                                <span>Direkt auf hejfish.com Tageskarte buchen</span>
+                            <p>
+                                Tageskarten für unsere fünf Vereinsgewässer (Haslacher Weiher, Baggersee Sattenbeuren, Mahlweiher, Wannenberger Weiher, Neuhauser Weiher) sind im Zeitraum <strong>01.03. – 31.10.</strong> ausschließlich für <strong>Vereinsmitglieder (m/w/d)</strong> über <strong>hejfish</strong> erhältlich.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+                                <i data-lucide="list-ordered" class="w-5 h-5 text-lake-600"></i>
+                                In 5 Schritten zur digitalen Tageskarte auf hejfish.com:
+                            </h3>
+                            <ol class="space-y-2.5 text-sm text-slate-700">
+                                <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-lake-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                                    <span>Kostenlos auf <a href="https://www.hejfish.com/m/fischer-und-naturschutzverein-aulendorf-e-v-1980" target="_blank" rel="noopener noreferrer" class="text-lake-600 font-semibold underline">hejfish.com</a> registrieren.</span>
+                                </li>
+                                <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-lake-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                                    <span>Gültigen <strong>Fischereischein</strong> im hejfish-Nutzerprofil hochladen.</span>
+                                </li>
+                                <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-lake-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                                    <span>Unter <strong>„Verein“</strong> nach <em>„aulendorf“</em> suchen, den <strong>„Fischer- und Naturschutzverein Aulendorf e.V.“</strong> auswählen, Mitgliedsnummer eintragen und auf <strong>„Verein verbinden“</strong> klicken.</span>
+                                </li>
+                                <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-lake-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                                    <span>Nach Freischaltung das gewünschte Gewässer wählen und die Tageskarte für <strong>18,00 €</strong> online lösen.</span>
+                                </li>
+                                <li class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                                    <span class="w-6 h-6 rounded-full bg-lake-600 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">5</span>
+                                    <span><strong>Ausgedruckte Tageskarte</strong> ans Gewässer mitnehmen und Fänge direkt online im hejfish-Fangbuch eintragen.</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-forest-50 border border-forest-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <div class="space-y-1">
+                                <h3 class="font-bold text-forest-900 text-sm sm:text-base flex items-center gap-2">
+                                    <i data-lucide="key-round" class="w-4 h-4 text-forest-600"></i>
+                                    Schlüsselausgabe am Fischerheim Haslach (50,00 € Pfand)
+                                </h3>
+                                <p class="text-xs sm:text-sm text-slate-600">
+                                    Ausgabe freitags ab ca. 18:00 Uhr im Fischerheim Haslach nach vorheriger Anmeldung per E-Mail an <a href="mailto:info@fnv-aulendorf.de" class="text-lake-600 font-semibold underline">info@fnv-aulendorf.de</a>.
+                                </p>
+                            </div>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=Haslach+3,+88326+Aulendorf&travelmode=driving" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-forest-700 hover:bg-forest-800 text-white text-xs font-semibold flex items-center gap-1.5 shrink-0">
+                                <i data-lucide="navigation" class="w-3.5 h-3.5"></i> Route zum Fischerheim
                             </a>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3 pt-1">
+                            <a href="https://www.hejfish.com/m/fischer-und-naturschutzverein-aulendorf-e-v-1980" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-lake-600 hover:bg-lake-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow transition">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Jetzt Tageskarte auf hejfish.com buchen</span>
+                            </a>
+                            <button onclick="switchTab('gewaesser')" class="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm px-5 py-3 rounded-xl transition">
+                                <i data-lucide="waves" class="w-4 h-4 text-forest-600"></i>
+                                <span>Gewässer-Details & Anfahrt ansehen</span>
+                            </button>
                         </div>
                     </div>
                 </section>
